@@ -33,7 +33,7 @@ public class Grid {
     }
 
     public int getPos(int x, int y) {
-        return (x - 1) * y;
+        return (x * col) + y + 1;
     }
 
 }
