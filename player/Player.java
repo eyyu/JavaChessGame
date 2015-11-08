@@ -1,4 +1,7 @@
-
+/** 
+ * I AM JUST TAKING A BREAK FROM MY PROJECT. 
+ * :) enjoy.
+ */
 package assignment2.player;
 
 /**
