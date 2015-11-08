@@ -10,7 +10,7 @@ package assignment2.game.chess;
  * @author Eva
  */
  class Knight {
-	ChessPiece knight = KNIGHT;
+	ChessPiece KNIGHT;
 	/**
 	 * This method moves a knight in chess
 	 * and retricts it to only the moves a knight can make

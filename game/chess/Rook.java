@@ -10,7 +10,7 @@ package assignment2.game.chess;
  * @author Eva
  */
  class Rook{
-	ChessPiece rook = ROOK;
+	ChessPiece ROOK;
 	/**
 	 * This method moves a bishop in chess
 	 * and retricts it to only the moves a bishop can make

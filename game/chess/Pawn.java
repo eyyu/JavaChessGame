@@ -10,7 +10,7 @@ package assignment2.game.chess;
  * @author Eva
  */
  class Pawn {
-	ChessPiece pawn = PAWN;
+	ChessPiece PAWN;
 	/**
 	 * This method moves a pawn in chess
 	 * and retricts it to only the moves a pawn can make
