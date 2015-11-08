@@ -12,31 +12,33 @@ import assignment2.grid.Grid;
  * @author Eva
  */
 abstract class GridBoardGame extends BoardGame {
-    BoardGameLayout grid = GRID;
+
+    BoardGameLayout GRID;
     int players;
     Grid board;
     int pieces;
     /*
-     *Grid baord game constructor will create a new grid for the board 
-     * @param  size [description]
+     * Grid baord game constructor will create a new grid for the board @param
+     * size [description]
      */
-    public GridBoardGame(int size){
-        this.initBoard(size,size);
+
+    public GridBoardGame(int size) {
+        this.initBoard(size, size);
     }
+
     /**
-     * Grid baord game constructor will create a new grid for the board 
-     * if the grid of the board is not 
-     * 
-     * @param  x [the rows of the grid]
-     * @param  y [the columns of the grid]
+     * Grid baord game constructor will create a new grid for the board if the
+     * grid of the board is not
+     *
+     * @param x [the rows of the grid]
+     * @param y [the columns of the grid]
      */
-    public GridBoardGame(int x , int y){
-        this.initBoard(x,y);
+    public GridBoardGame(int x, int y) {
+        this.initBoard(x, y);
     }
 
     @Override
-    abstract public void start(){
-    }
+    abstract public void start();
 
     @Override
     abstract public void end();

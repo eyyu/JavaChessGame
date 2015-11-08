@@ -5,17 +5,21 @@
  */
 package assignment2.game.chess;
 
+import assignment2.game.BoardGamePiece;
+
 /**
  *
  * @author Eva
  */
- class King {
-	ChessPiece KING;
-	/**
-	 * This method moves a king in chess
-	 * and retricts it to only the moves a king can make
-	 */
-	 public static void move(){
+class King implements BoardGamePiece {
 
-	 }
+    ChessPiece KING;
+
+    /**
+     * This method moves a king in chess and restricts it to only the moves a
+     * king can make
+     */
+    public static void move() {
+
+    }
 }

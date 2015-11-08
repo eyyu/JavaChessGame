@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 package assignment2.game.chess;
-
+import assignment2.game.BoardGamePiece;
 /**
  *
  * @author Eva
  */
- class Queen{
+ class Queen implements BoardGamePiece {
 	ChessPiece QUEEN;
 	/**
 	 * This method moves a queen in chess
