@@ -1,3 +1,56 @@
+package assignment2.player;
+/**
+ * @author Eva
+ */
+class Player2{
+	boolean turn;
+	String name = NULL;
+	boolean winner = false;
+
+	public Player(){
+	}
+
+	public Player(String s){
+		this.setName(s);
+	}
+
+	public Player(String s, boolean setTurnOff){
+		this.setName(s);
+		if(setTurnOff){
+			this.restrictTurn();
+		}
+	}
+
+	public Player(Boolean setTurnOff){
+		if(setTurnOff){
+			this.restrictTurn();
+		}
+	}
+
+	public void setTurn(boolean set){
+		this.turn = true;
+	}
+
+	public void restrictTurn(){
+		this.turn = false;
+	}
+
+	public void setName(String s){
+		this.name  = s;
+	}
+
+	public void setWin(){
+		this.winner = true;
+	}
+
+	public boolean isWinner(){
+		return this.winner;
+	}
+
+}
+
+
+
 /** 
  * 
  * I AM JUST TAKING A BREAK FROM MY PROJECT. 
@@ -6,11 +59,7 @@
  * :)
  * 
  */
-package assignment2.player;
 
-/**
- * @author Eva
- */
 public class Player {
 	
 	static final Boolean SWAG = true; //cuz i always got SWAG
