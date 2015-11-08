@@ -1,6 +1,10 @@
 /** 
+ * 
  * I AM JUST TAKING A BREAK FROM MY PROJECT. 
- * :) enjoy.
+ * PLease, please, please don't take this seriously. 
+ * enjoy the critique of social behaviour through this neat little player class .
+ * :)
+ * 
  */
 package assignment2.player;
 
@@ -25,7 +29,7 @@ public class Player {
 		System.out.println(" Hay Gurrrl, How you Doin'? ;) ");
 		if(this.gotGame){
 			demBitches++;
-			System.out.println("BAM!")
+			System.out.println("BAM!");
 			billlls -= 1000;
 		}
 	}
