@@ -10,7 +10,6 @@ package assignment2.game.chess;
  * @author Eva
  */
 public enum ChessPiece {
-
     KING,
     QUEEN,
     KNIGHT,

@@ -9,6 +9,13 @@ package assignment2.game.chess;
  *
  * @author Eva
  */
-class Pawn {
+ class Pawn {
+	ChessPiece pawn = PAWN;
+	/**
+	 * This method moves a pawn in chess
+	 * and retricts it to only the moves a pawn can make
+	 */
+	 public static void move(){
 
+	 }
 }

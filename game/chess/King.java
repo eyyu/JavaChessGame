@@ -9,6 +9,13 @@ package assignment2.game.chess;
  *
  * @author Eva
  */
-class King {
+ class King {
+	ChessPiece king = KING;
+	/**
+	 * This method moves a king in chess
+	 * and retricts it to only the moves a king can make
+	 */
+	 public static void move(){
 
+	 }
 }
