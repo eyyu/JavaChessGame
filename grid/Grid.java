@@ -6,7 +6,10 @@
 package assignment2.grid;
 
 /**
- *
+ *This is the grid class.
+ *It can be used to create an 2-dimensional array of n rows and x columns
+ *It can be used on conjuntion with the square class to create a node for each position on the grid 
+ * 
  * @author Eva
  */
 public class Grid {

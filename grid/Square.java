@@ -6,7 +6,8 @@ package assignment2.grid;
 import java.awt.Color;
 
 /**
- *
+ * This is the square class. 
+ * It is here
  * @author Eva
  */
 public class Square {
@@ -18,7 +19,10 @@ public class Square {
     			  //going from left to right, 
     			  //top to bottom 
     			  //startin at 1;
-    
+    //*** 			  
+    //Note to self: should i make this a sqaure instead of an int??
+    // if so, how do i make it work?
+    //****
     protected int prevSquare; // for making the square a node in a linked list 
     protected int nextSquare; // for making the square a node in a linked list 
 
@@ -36,8 +40,9 @@ public class Square {
 		this.square(1);
 	}
 	/**
-	 * this constructor sets a swaure that is not part of a grid or a map 
-	 * it will not have a position assigned to it 
+	 * this constructor sets a sqaure that is not part of a grid or a map 
+	 * it will not have a position assigned to it.
+	 * It will only define the side of a square  
 	 * 
 	 * @param  s [takes in the length of a side ]
 	 */
@@ -82,11 +87,11 @@ public class Square {
 	protected void setPosition(int pos, Grid grid){
 		int x = grid.getCol(); // retrives number the rows in the grid 
 		int y = grid.getRow(); // retrieves the the columns in the grid 
-		this.position = pos;
-		setrightSquare(x,y);
-		setupperSquare(x,y);
-		setlowerSquare(x,y);
-		setLeftSquare(x,y);
+		this.position = pos; // retrieves the position of the squar
+		this.setrightSquare(x,y);
+		this.setupperSquare(x,y);
+		this.setlowerSquare(x,y);
+		this.setLeftSquare(x,y);
 	}
 	/**
 	 * [getPosition description]
@@ -159,5 +164,7 @@ public class Square {
 	public int getLowerSquare(){
 		return this.lowerSquare; 
 	}
+
+
 
 }

@@ -6,7 +6,10 @@
 package assignment2.game;
 
 /**
- *
+ * Thsi interface will set the basic parameters  expected in any game.
+ * Each game should have instructions and players
+ * each game should have a starting point and define some parameters for a winner
+ *  
  * @author Eva
  */
 public interface Game {

@@ -10,26 +10,28 @@ package assignment2.game.*;
  * @author Eva
  */
 public class Chess extends GridBoardGame{
-	int piece = 16;
-	int players = 2;
-	Player p1;
-	Player p2;
+	static final int PIECES = 16; // 16 pieces 
+	static final int PLAYERS = 2; // 2 players at a time
+    static final int GRIDSIZE = 8; // 8*8 board
+
+    Grid gameBoard;
+    Boolean validityMatrix[][] = new Boolean[GRIDSIZE][GRIDSIZE];
+    Square gameMatrix[][] = new Square[GRIDSIZE][GRIDSIZE];
+
+	Player p1; // should be starting player
+	Player p2; // should get second turn 
+
 //notes : track every piece and 
 //each piece has an availability grid 
 // for piece pickes the piece needs its own calculation/ update of grid availability
-// 	
 
-    BoardGameLayout GRID;
-    int players;
-    Grid board;
-    int pieces;
     /*
      * Grid baord game constructor will create a new grid for the board @param
      * size [description]
      */
 
-    public GridBoardGame(int size) {
-        this.initBoard(size, size);
+    public Chess(int size) {
+        super.initBoard(size, size);
     }
 
     /**
@@ -39,8 +41,8 @@ public class Chess extends GridBoardGame{
      * @param x [the rows of the grid]
      * @param y [the columns of the grid]
      */
-    public GridBoardGame(int x, int y) {
-        this.initBoard(x, y);
+    public Chess(int x, int y) {
+        super.initBoard(x, y);
     }
 
     @Override
@@ -78,6 +80,21 @@ public class Chess extends GridBoardGame{
 	public void checkAvailGrid(){
 
 	}
+    /**
+     * This method should generate a 8*8 grid 
+     *
+     * @param p     [description]
+     * @param s_src [description]
+     */
+    private void generateValidityMatrix(ChessPiece p, Square s_src){
+
+    }
+    //reminder to make a readMe.txt file for instruction on chess. 
+    //just get somethign from wiki or something, no need to do it yourself 
+    //because thats not the point of this assignment, you fool. 
+    
+    public void setInstructions();
+    public void getInstructions();
 
 }
 

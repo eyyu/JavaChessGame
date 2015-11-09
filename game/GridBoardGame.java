@@ -60,9 +60,17 @@ abstract class GridBoardGame extends BoardGame {
 
     @Override
     abstract public void getPos();
-
+    
+    @Override
     abstract void move();//Can enums inherit? Answer: No. 
-
+    
+    @Override
+    abstract void setInstructions();
+    
+    @Override
+    abstract void getInstructions();
+    
+    @Override
     protected Grid initBoard(int gridL, int gridW) {
         return new Grid(gridL, gridW);
     }
