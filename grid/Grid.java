@@ -1,14 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *COMP 2526 Assignment 2 -- chess game
+ * November 11th , 2015 
  */
 package assignment2.grid;
 
 /**
  *This is the grid class.
- *It can be used to create an 2-dimensional array of n rows and x columns
- *It can be used on conjuntion with the square class to create a node for each position on the grid 
+ *
+ * it will be extended by the boardclass for board games in order to better manage columns and rows of the board.
+ * 
+ *It can be used on conjuntion with the square class to create an object at each position on the grid 
  * 
  * @author Eva
  */
@@ -48,7 +49,7 @@ public class Grid {
      * gets the number of rows there are in the grid
      * @return int indicating number of rows in grid
      */
-    public int getRow() {
+    public int getRowSize() {
         return this.row;
     }
 
@@ -56,7 +57,7 @@ public class Grid {
      * returns number of columns found in the row
      * @return int indicating number of cols in grid
      */
-    public int getCol() {
+    public int getColSize() {
         return this.colummn;
     }
 
@@ -71,6 +72,33 @@ public class Grid {
      */
     public int getPos(int x, int y) {
         return ((x - 1) * this.colummn) + y;
+    }
+    /**
+     * this method will return the column at the position requested 
+     * this method assumes the rows and columns start at 1 
+     * this method also assumes the position of the object begins at 1 - n 
+     * from top to bottom, left to right
+     * @param  pos [description]
+     * @return     [description]
+     */
+    public int getX(int pos){
+        return (pos / this.column) + 1;   
+    }
+    /**
+     * THis method will return the position at the y axis of the object 
+     * assuming that the grid has the numbers 1 - n
+     * count left to rigth, top to bottom  
+     * 
+     * @param  pos [description]
+     * @return     [description]
+     */
+    public int getY(int pos){
+        int posY = pos % this.row; 
+        if (posY == 0){
+            return this.colummn
+        } else{
+            return (posY);
+        }
     }
 
 }

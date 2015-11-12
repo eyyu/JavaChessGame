@@ -11,7 +11,9 @@ import java.awt.Color;
  * @author Eva
  */
 public class Square {
+	// somehow implement   piece so each square has a piece ?
 
+    //are the follwong necessary fr the game? 
     protected int side;
     protected int vol;
     protected int perim;
@@ -19,6 +21,7 @@ public class Square {
     			  //going from left to right, 
     			  //top to bottom 
     			  //startin at 1;
+    // are the follwing necesary for the game? 
     //*** 			  
     //Note to self: should i make this a sqaure instead of an int??
     // if so, how do i make it work?
@@ -80,6 +83,7 @@ public class Square {
     	this.prevSquare = prev;
 		this.nextSquare = next;
 	}
+	//perhaps the set left nad right are not necssary par tof the game.. 
 	/**
 	 * Finds the position of the square on  a linked list or map 
 	 * @param pos [description]
@@ -93,6 +97,7 @@ public class Square {
 		this.setlowerSquare(x,y);
 		this.setLeftSquare(x,y);
 	}
+	//this one is necessary for the pieces. most-def keep it 
 	/**
 	 * [getPosition description]
 	 * @return [description]

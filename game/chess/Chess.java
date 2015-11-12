@@ -21,6 +21,9 @@ public class Chess extends GridBoardGame{
 	Player p1; // should be starting player
 	Player p2; // should get second turn 
 
+    Boolean p1setColor; // true== white
+    Boolean p2setColor; // false == black;
+
 //notes : track every piece and 
 //each piece has an availability grid 
 // for piece pickes the piece needs its own calculation/ update of grid availability
@@ -29,7 +32,6 @@ public class Chess extends GridBoardGame{
      * Grid baord game constructor will create a new grid for the board @param
      * size [description]
      */
-
     public Chess(int size) {
         super.initBoard(size, size);
     }
@@ -89,6 +91,9 @@ public class Chess extends GridBoardGame{
     private void generateValidityMatrix(ChessPiece p, Square s_src){
 
     }
+    
+    private int getY(int pos);
+    private int getX(int pos);
     //reminder to make a readMe.txt file for instruction on chess. 
     //just get somethign from wiki or something, no need to do it yourself 
     //because thats not the point of this assignment, you fool. 
