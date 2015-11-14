@@ -13,19 +13,19 @@ import javax.swing.*;
  *
  * @author Eva
  */
-public class ChessBoard extends JFrame {
+public class ChessBoard2 extends JFrame {
 
     final static int BOARD_SIZE = 8;
 
     public static void main(String args[]) {
-        final Color HOTPINK = new Color(251, 12, 138);
+        final Color HOTPINK = new Color(252, 198, 10);
         final Color BUBBLEGUM = new Color(35, 210, 254);
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame chessFrame;
         GridLayout boardLayout;
         JButton[][] BoardSpace = new JButton[BOARD_SIZE][BOARD_SIZE];
 
-        chessFrame = new JFrame("HOTPINK BUBBLEGUM BUTTON PUSH"); // sets the frame to but the grid layout 
+        chessFrame = new JFrame("SPACE IKEA BUTTON PUSH"); // sets the frame to but the grid layout 
         chessFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         boardLayout = new GridLayout(BOARD_SIZE, BOARD_SIZE);// creates a grid layout 

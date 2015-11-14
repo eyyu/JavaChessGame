@@ -4,23 +4,29 @@
  * and open the template in the editor.
  */
 package assignment2.game.chess;
-package assignment2.game.*;
+
+import assignment2.game.BoardGamePiece;
+import assignment2.grid.Grid;
+import assignment2.grid.Square;
+import assignment2.player.Player;
+
 /**
  *
  * @author Eva
  */
-public class Chess extends GridBoardGame{
-	static final int PIECES = 16; // 16 pieces 
-	static final int PLAYERS = 2; // 2 players at a time
+public class Chess {
+
+    static final int PIECES = 32; // 16 pieces 
+    static final int PLAYERS = 2; // 2 players at a time
     static final int GRIDSIZE = 8; // 8*8 board
 
-    Grid gameBoard;
-    Boolean validityMatrix[][] = new Boolean[GRIDSIZE][GRIDSIZE];
-    Square gameMatrix[][] = new Square[GRIDSIZE][GRIDSIZE];
-
-	Player p1; // should be starting player
-	Player p2; // should get second turn 
-
+    ChessBoard chessBoard;
+    Player p1; // should be starting player
+    Player p2; // should get second turn 
+    private int p1count; // number of pieces that the player has
+    private int p2count; // number of peices that the player has 
+    private BoardGamePiece p1pieces[] = new BoardGamePiece[PIECES / 2];
+    private BoardGamePiece p2pieces[] = new BoardGamePiece[PIECES / 2];
     Boolean p1setColor; // true== white
     Boolean p2setColor; // false == black;
 
@@ -32,95 +38,64 @@ public class Chess extends GridBoardGame{
      * Grid baord game constructor will create a new grid for the board @param
      * size [description]
      */
-    public Chess(int size) {
-        super.initBoard(size, size);
+    public Chess() {
+        this.initPlayers();
+        this.chessBoard = new ChessBoard();
     }
 
-    /**
-     * Grid baord game constructor will create a new grid for the board if the
-     * grid of the board is not
+    public void initPlayers() {
+        this.p1 = new Player();
+        this.p2 = new Player();
+        this.p2.setSetColor(false); // auto set player 2 to black set setColor
+    }
+
+    public Player getPlayer(int player) { // the function will allow one to set the ame of the player and the status of the player
+        if (player == 1) {
+            return p2;
+        }
+        return p2;
+    }
+    // this method should set the side of the players.
+    /*
+     * @Override abstract public void start() { System.out.println("Congrats!
+     * You Won!"); }
      *
-     * @param x [the rows of the grid]
-     * @param y [the columns of the grid]
-     */
-    public Chess(int x, int y) {
-        super.initBoard(x, y);
-    }
-
-    @Override
-    abstract public void start();
-
-    @Override
-    abstract public void end();
-
-    @Override
-    abstract public void win();
-
-    @Override
-    abstract public int getPlayers();
-
-    @Override
-    abstract public void initPlayers();
-
-    @Override
-    abstract public int getPiece();
-
-    @Override
-    abstract public void setPlayer();
-
-    @Override
-    abstract public void getPos();
-
-    abstract void move();//Can enums inherit? Answer: No. like, obvi.
-
-    //parent has:
-    /*protected Grid initBoard(int gridL, int gridW) {
-        return new Grid(gridL, gridW);
-    }
-    */
-	
-	public void checkAvailGrid(){
-
-	}
-    /**
-     * This method should generate a 8*8 grid 
+     * @Override abstract public void end() { System.out.println("Congrats! You
+     * Won!"); } // write the win function here
      *
-     * @param p     [description]
-     * @param s_src [description]
+     * @Override abstract public void win() { System.out.println("Congrats! You
+     * Won!"); } // write the win function and assign winner
      */
-    private void generateValidityMatrix(ChessPiece p, Square s_src){
-
-    }
-    
-    private int getY(int pos);
-    private int getX(int pos);
+    /**
+     * This method will return the number of players there are in the game.
+     * @return []
+     *
+     * @Override public int getPlayers() { return this.PLAYERS; }
+     *
+     * @Override abstract public int getPiece(){
+     *
+     * }
+     *
+     * @Override abstract public void setPlayer(){
+     *
+     * }
+     *
+     * @Override abstract public void getPos(){
+     *
+     * }
+     *
+     * abstract void move(){
+     *
+     * }
+     */
     //reminder to make a readMe.txt file for instruction on chess. 
     //just get somethign from wiki or something, no need to do it yourself 
     //because thats not the point of this assignment, you fool. 
-    
-    public void setInstructions();
-    public void getInstructions();
+    public void setInstructions() {
+        System.out.println("Set Instructions");
+    }
 
-}
-
-static class Moves(){
-	static boolean moveDiagonal(ChessPiece p, Square s_src, Square s_dest){
-
-	}
-	static boolean moveUp(ChessPiece p, Square s_src, Square s_dest){
-
-	}
-	static boolean moveDown(ChessPiece p, Square s_src, Square s_dest){
-
-	}
-	static boolean moveLeft(ChessPiece p, Square s_src, Square s_dest){
-
-	}
-	static boolean moveRight(ChessPiece p, Square s_src, Square s_dest){
-
-	}
-	static boolean knightMove(ChessPiece p, Square s_src, Square s_dest){ // NOTE: is there a special name for this move???
-
-	}
-	
+    public void getInstructions() {
+        System.out.println("Set Instructions");
+    }
 }
