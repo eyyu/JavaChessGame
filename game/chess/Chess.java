@@ -43,18 +43,20 @@ public class Chess {
         this.chessBoard = new ChessBoard();
     }
 
-    public void initPlayers() {
+    private void initPlayers() {
         this.p1 = new Player();
         this.p2 = new Player();
         this.p2.setSetColor(false); // auto set player 2 to black set setColor
+        this.p2.restrictTurn();
     }
 
     public Player getPlayer(int player) { // the function will allow one to set the ame of the player and the status of the player
         if (player == 1) {
-            return p2;
+            return p1;
         }
         return p2;
     }
+
     // this method should set the side of the players.
     /*
      * @Override abstract public void start() { System.out.println("Congrats!

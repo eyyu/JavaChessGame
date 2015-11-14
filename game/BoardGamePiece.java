@@ -7,6 +7,7 @@
 package assignment2.game;
 
 import assignment2.grid.Grid;
+import assignment2.player.Player;
 
 /**
  * This interface will make sure that for any board game with a pices, the
@@ -21,4 +22,10 @@ public interface BoardGamePiece {
     void setColor(Boolean setColor);
 
     boolean getColor();
+
+    String getPieceName();
+
+    Player getPlayer();
+
+    void setPlayer(Player p);
 }

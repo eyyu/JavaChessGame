@@ -6,9 +6,9 @@
 package assignment2.game.chess;
 
 import assignment2.game.BoardGamePiece;
-import java.lang.Math;
 import assignment2.grid.Grid;
 import assignment2.grid.Square;
+import assignment2.player.Player;
 
 /**
  * This is the chess board class that a chess game will have
@@ -38,11 +38,32 @@ public class ChessBoard {
      *
      */
     public ChessBoard() {
+        this.initSquare();
+        this.initBoard();
 
+    } // end chessBoard constructor 1 
+
+    /**
+     * [this method will generate a new validity matrix every time the user
+     * picks a piece ]
+     * @param p []
+     * @param pos []
+     */
+    private void initSquare() {
+        for (int row = 0; row < BOARDSIZE; row++) { // SET THEM PAWNS UP
+            for (int col = 0; col < BOARDSIZE; col++) {
+                square[row][col] = new Square();
+                square[row][col].setPosition(row * BOARDSIZE + col + 1);
+            }
+        }
+    }
+
+    private void initBoard() {
         for (int row = 1; row < BOARDSIZE; row += PAWN_INIT_ROW_DIFF) { // SET THEM PAWNS UP
             for (int col = 0; col < BOARDSIZE; col++) {
+
                 this.square[row][col].setPiece(new Pawn()); // new pawn for each sqaure in the
-                this.square[row][col].setPosition(board.getPos(row + 1, col + 1)); // are these too many nested functions??!?  
+                // are these too many nested functions??!?  
                 //but ... it makes life so much easier!! NO ,it is NOT ( says I )
                 if (row < (BOARDSIZE / 2)) {
                     (this.square[row][col].getPiece()).setColor(true); // White set
@@ -57,7 +78,6 @@ public class ChessBoard {
         // the following loop for all the pieces
         for (int row = 0; row < BOARDSIZE; row += (BOARDSIZE - 1)) {
             for (int col = 0; col < BOARDSIZE; col++) {
-
                 int pos = square[row][col].getPosition();
                 switch (pos) {
                     //Rook
@@ -100,15 +120,8 @@ public class ChessBoard {
                 }
             }
         } // set the first and last rows 
+    }
 
-    } // end chessBoard constructor 1 
-
-    /**
-     * [this method will generate a new validity matrix every time the user
-     * picks a piece ]
-     * @param p []
-     * @param pos []
-     */
     public void generateValidityMatrix(BoardGamePiece p, int pos) {
         this.validityMatrix = new ValidityMatrix(p, pos);
     }
@@ -127,6 +140,10 @@ public class ChessBoard {
         //use the x and y in the validitiy matix generated  
         return true;
 
+    }
+
+    public int move(BoardGamePiece p, int newPos, int curPos) {
+        return p.move(curPos, newPos, board);
     }
 
     /**
@@ -217,6 +234,21 @@ public class ChessBoard {
             return vM[x - 1][y - 1]; // returns the value found in the validity matrix for that position desired by the chess piece
         }
 
+        public void print() {
+            for (int row = 0; row < BOARDSIZE; row++) {
+                for (int col = 0; col < BOARDSIZE; col++) {
+                    int temp;
+                    if (vM[row][col] == true) {
+                        temp = 1;
+                    } else {
+                        temp = 0;
+                    }
+                    System.out.print(temp + " ");
+                }
+                System.out.println("");
+            }
+        }
+
     }
 
 }//end ChessBoard class
@@ -234,7 +266,9 @@ class Pawn implements BoardGamePiece {
     Boolean setColor; // this sets the color of the piece according to the playe. 
     //black is represented by 0 and white represented by one
     Boolean firstmove = true; // allows the one time movment of two steps in the very first move of the pawn;
-    ChessPiece PAWN;
+    public String pieceName = "PAWN";
+
+    Player player;
 
     /**
      * This method moves a pawn in chess and restricts it to only the moves a
@@ -291,6 +325,20 @@ class Pawn implements BoardGamePiece {
     public boolean getColor() {
         return this.setColor;
     }
+
+    @Override
+    public String getPieceName() {
+        return this.pieceName;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public void setPlayer(Player p) {
+    }
 }
 
 /**
@@ -303,8 +351,9 @@ class Pawn implements BoardGamePiece {
  */
 class Rook implements BoardGamePiece {
 
-    ChessPiece ROOK;
+    public String pieceName = "ROOK";
     Boolean setColor; // this sets the color of the piece according to the playe. 
+    Player player;
 
     /**
      * This method moves a bishop in chess and retricts it to only the moves a
@@ -340,6 +389,20 @@ class Rook implements BoardGamePiece {
     public boolean getColor() {
         return this.setColor;
     }
+
+    @Override
+    public String getPieceName() {
+        return this.pieceName;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public void setPlayer(Player p) {
+    }
 }
 
 /**
@@ -352,8 +415,9 @@ class Rook implements BoardGamePiece {
  */
 class Knight implements BoardGamePiece {
 
-    ChessPiece KNIGHT;
+    public String pieceName = "KNIGHT";
     Boolean setColor; // this sets the color of the piece according to the playe. 
+    Player player;
 
     /**
      * This method moves a knight in chess and retricts it to only the moves a
@@ -393,6 +457,20 @@ class Knight implements BoardGamePiece {
     public boolean getColor() {
         return this.setColor;
     }
+
+    @Override
+    public String getPieceName() {
+        return this.pieceName;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public void setPlayer(Player p) {
+    }
 }
 
 /**
@@ -406,7 +484,8 @@ class Knight implements BoardGamePiece {
 class Bishop implements BoardGamePiece {
 
     Boolean setColor; // this sets the color of the piece according to the playe. 
-    ChessPiece BISHOP;
+    public String pieceName = "BISHOP";
+    Player player;
 
     /**
      * This method moves a bishop in chess and retricts it to only the moves a
@@ -441,6 +520,20 @@ class Bishop implements BoardGamePiece {
     public boolean getColor() {
         return this.setColor;
     }
+
+    @Override
+    public String getPieceName() {
+        return this.pieceName;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public void setPlayer(Player p) {
+    }
 }
 
 /**
@@ -454,7 +547,8 @@ class Bishop implements BoardGamePiece {
 class King implements BoardGamePiece {
 
     Boolean setColor; // this sets the color of the piece according to the playe. 
-    ChessPiece KING;
+    public String pieceName = "KING";
+    Player player;
 
     /**
      * This method moves a king in chess and restricts it to only the moves a
@@ -490,6 +584,20 @@ class King implements BoardGamePiece {
     public boolean getColor() {
         return this.setColor;
     }
+
+    @Override
+    public String getPieceName() {
+        return this.pieceName;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public void setPlayer(Player p) {
+    }
 }
 
 /**
@@ -502,8 +610,9 @@ class King implements BoardGamePiece {
  */
 class Queen implements BoardGamePiece {
 
-    ChessPiece QUEEN;
+    public String pieceName = "QUEEN";
     Boolean setColor; // this sets the color of the piece according to the playe. 
+    Player player;
 
     /**
      * This method moves a queen in chess and retricts it to only the moves a
@@ -538,5 +647,19 @@ class Queen implements BoardGamePiece {
     @Override
     public boolean getColor() {
         return this.setColor;
+    }
+
+    @Override
+    public String getPieceName() {
+        return this.pieceName;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    @Override
+    public void setPlayer(Player p) {
     }
 }

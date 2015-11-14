@@ -16,6 +16,8 @@ abstract class BoardGame implements Game {
     int numOfPlayer;
     int pieces;
     BoardGameLayout layout;
+    boolean setColor = true;
+    boolean setColor = true;
 
     @Override
     abstract public void start();

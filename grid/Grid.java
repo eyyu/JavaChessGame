@@ -84,7 +84,10 @@ public class Grid {
      * @return [description]
      */
     public int getX(int pos) {
-        return (pos / this.colummn) + 1;
+        if(pos % colummn == 0)
+            return (pos / this.colummn);
+        else
+            return (pos / this.colummn) + 1;
     }
 
     /**

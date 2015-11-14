@@ -15,9 +15,11 @@ package assignment2.player;
 public class Player {
 
     boolean turn = true;
+    boolean pieceMove = true;
     String name = null;
     boolean winner = false;
-    boolean setColor = true;
+    boolean setColor = true; // i dont like this here, it is not in the right class
+
     /**
      * [THe constructor for palyer class that sets up an unnamed character that
      * has a default turn to true]
@@ -73,6 +75,18 @@ public class Player {
         this.turn = false;
     }
 
+    public void setPieceMove() {
+        this.pieceMove = true;
+    }
+
+    public void restrictPieceMove() {
+        this.pieceMove = false;
+    }
+
+    public boolean getPieceMove() {
+        return this.pieceMove;
+    }
+
     public void setName(String s) {
         this.name = s;
     }
@@ -84,13 +98,14 @@ public class Player {
     public boolean isWinner() {
         return this.winner;
     }
-    
+
     // is this suposed to be in player class? perhaps a i need a chess player class
-    public void setSetColor(boolean setCol){
+    public void setSetColor(boolean setCol) {
         this.setColor = setCol;
     }
+
     //same for this method here 
-    public boolean getSetColor(){
+    public boolean getSetColor() {
         return this.setColor;
     }
 }

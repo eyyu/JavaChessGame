@@ -30,7 +30,7 @@ public class Square {
     }
 
     public void setPosition(int pos) {
-        this.position = pos; // retrieves the position of the squar
+        this.position = pos; // retrieves the position of the square
     }
 
     //this one is necessary for the pieces. most-def keep it 
