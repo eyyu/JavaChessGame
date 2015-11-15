@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * COMP 2526 -- ASSIGNEMNT 2 -- CHESS GAME 
+ * Author: Eva Yu * 
+ * BCIT -- A00942918 -- CST2B  * 
+
  */
 package assignment2.game.chess;
 
@@ -11,7 +12,15 @@ import assignment2.grid.Square;
 import assignment2.player.Player;
 
 /**
+ * This class will contain all the compnents of the chess game including the
+ * players the pieces and the board
  *
+ * NOTE NOV. 15. 2015:
+ * @version: 1 only initiates the board so far , players do not take turns so
+ * far
+ *
+ * it will also keep data the chess class will also keep track of the players
+ * turns, the number of kills a player has made
  * @author Eva
  */
 public class Chess {
@@ -20,7 +29,8 @@ public class Chess {
     static final int PLAYERS = 2; // 2 players at a time
     static final int GRIDSIZE = 8; // 8*8 board
 
-    ChessBoard chessBoard;
+    ChessBoard chessBoard;// this is the board that will contain 
+    //all the sqaure, each with a piece or set to null
     Player p1; // should be starting player
     Player p2; // should get second turn 
     private int p1count; // number of pieces that the player has
@@ -30,19 +40,19 @@ public class Chess {
     Boolean p1setColor; // true== white
     Boolean p2setColor; // false == black;
 
-//notes : track every piece and 
-//each piece has an availability grid 
-// for piece pickes the piece needs its own calculation/ update of grid availability
-
     /*
      * Grid baord game constructor will create a new grid for the board @param
-     * size [description]
      */
     public Chess() {
         this.initPlayers();
         this.chessBoard = new ChessBoard();
     }
 
+    /**
+     * This method intializes the players for the chess class it will restrict
+     * player 2's turn in order for whoever playre one is to start first
+     *
+     */
     private void initPlayers() {
         this.p1 = new Player();
         this.p2 = new Player();
@@ -50,54 +60,50 @@ public class Chess {
         this.p2.restrictTurn();
     }
 
-    public Player getPlayer(int player) { // the function will allow one to set the ame of the player and the status of the player
+    /**
+     * this method returns the player in order to use the player classes methods
+     * on the player you can set the winner using thsi class
+     * @param player [this is an interger representing the player you want to
+     * retrieve. By default player 1 has the white set and player 2 has the
+     * black set of the chess peices ]
+     * @return [returns the player requested. only one of two players will be
+     * returned]
+     *
+     * Note to self: i should write a try catch method in order to catch an
+     * excpetions that is not player one or two
+     */
+    public Player getPlayer(int player) { // the function will allow one to set 
+        //the name of the player and the 
+        //status of the player
         if (player == 1) {
             return p1;
         }
         return p2;
     }
 
-    // this method should set the side of the players.
-    /*
-     * @Override abstract public void start() { System.out.println("Congrats!
-     * You Won!"); }
-     *
-     * @Override abstract public void end() { System.out.println("Congrats! You
-     * Won!"); } // write the win function here
-     *
-     * @Override abstract public void win() { System.out.println("Congrats! You
-     * Won!"); } // write the win function and assign winner
-     */
     /**
-     * This method will return the number of players there are in the game.
-     * @return []
+     * This method should be inherited from the parent class, game. however, in
+     * version one, game is not yet inherited in chess class
      *
-     * @Override public int getPlayers() { return this.PLAYERS; }
+     * this method will set the instructions of the game. currently, in version
+     * one, it will only print to stderr suggesting that this method has nto
+     * been properly defined
      *
-     * @Override abstract public int getPiece(){
-     *
-     * }
-     *
-     * @Override abstract public void setPlayer(){
-     *
-     * }
-     *
-     * @Override abstract public void getPos(){
-     *
-     * }
-     *
-     * abstract void move(){
-     *
-     * }
      */
-    //reminder to make a readMe.txt file for instruction on chess. 
-    //just get somethign from wiki or something, no need to do it yourself 
-    //because thats not the point of this assignment, you fool. 
     public void setInstructions() {
-        System.out.println("Set Instructions");
+        System.err.println("Class has not been initilaized. No Instructions to set.");
     }
 
+    /**
+     * This method should return the how-to-play instructions of the game. like
+     * setInstructions method, this program should actually be inherited from
+     * the parent class. due to time constraints, version one does not inherit
+     * from its supposed parent/superclass, game game is in the redundant
+     * folders file
+     *
+     */
     public void getInstructions() {
-        System.out.println("Set Instructions");
+        this.setInstructions();
+        System.err.println("Refer to Wiki for Instructions");
     }
 }

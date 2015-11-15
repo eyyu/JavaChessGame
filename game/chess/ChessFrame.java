@@ -11,7 +11,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- *
+ * this is the main class for the chess game gui 
+ * it holds a frame for the jPanel chess game
  * @author Eva
  */
 public class ChessFrame extends JFrame {
@@ -22,7 +23,7 @@ public class ChessFrame extends JFrame {
         JFrame chessFrame;
 
         JFrame.setDefaultLookAndFeelDecorated(true);
-        chessFrame = new JFrame("Space IKEA Chess Game");
+        chessFrame = new JFrame("Chess Game Version 1");
         chessFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chessFrame.getContentPane().add(new JChessPanel());
         chessFrame.pack();

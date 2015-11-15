@@ -70,107 +70,71 @@ public class Player {
     public void setTurn() {
         this.turn = true;
     }
-
+    /**
+     * this method is used to restrict the turn of the player
+     */
     public void restrictTurn() {
         this.turn = false;
     }
-
+    /**
+     * NOTE: this method may be necessary for v2, currently not used in v1
+     *  
+     * this method is used to set the piece to be able to move
+     * 
+     */
     public void setPieceMove() {
         this.pieceMove = true;
     }
-
+    /**
+     * NOTE: this method may be necessary for v2, currently not used in v1
+     * 
+     * this is a method that restricts a piece from moving
+     */
     public void restrictPieceMove() {
         this.pieceMove = false;
     }
-
+    /**
+     * NOTE: this method may be necessary for v2, currently not used in v1
+     * 
+     * @return [description]
+     */
     public boolean getPieceMove() {
         return this.pieceMove;
     }
-
+    /**
+     * this method is used to set the name of the player.
+     * this method does not need to be used 
+     * @param s [description]
+     */
     public void setName(String s) {
         this.name = s;
     }
-
+    /**
+     * this method is  used to set the player as the winner
+     */
     public void setWin() {
         this.winner = true;
     }
-
+        /**
+         * this method retrieves whether the player has won
+         * @return [only returns true if the player is set to winner]
+         */
     public boolean isWinner() {
         return this.winner;
     }
-
-    // is this suposed to be in player class? perhaps a i need a chess player class
+    /**
+     * NOTE: this method may be necessary for v2, currently not used in v1
+    * is this suposed to be in player class? perhaps a i need a chess player class
+    */
     public void setSetColor(boolean setCol) {
         this.setColor = setCol;
     }
-
-    //same for this method here 
+    /**
+     * NOTE: this method may be necessary for v2, currently not used in v1
+    * is this suposed to be in player class? perhaps a i need a chess player class
+    */
     public boolean getSetColor() {
         return this.setColor;
     }
 }
 
-/**
- *
- * I AM JUST TAKING A BREAK FROM MY PROJECT. PLease, please, please don't take
- * this seriously. enjoy the critique of social behaviour through this neat
- * little player class . :)
- *
- *
- */
-/**
- * this class is the playa class. you cant hate the playa, you can only hate the
- * game.
- */
-class Playa {
-
-    static final Boolean SWAG = true; //cuz i always got SWAG
-    Boolean gotGame = false;
-    int demBitches;
-    int brothas;
-    int problems = 99;
-    int billlls;
-
-    public Playa(int bitches, int bros) {
-        this.demBitches = bitches;
-        this.brothas = bros;
-    }
-
-    public void usePickUpMove() {
-        System.out.println(" Hay Gurrrl, How you Doin'? ;) ");
-        if (this.gotGame) {
-            demBitches++;
-            System.out.println("BAM!");
-            billlls -= 1000;
-        }
-    }
-
-    public void getGame() {
-        if (!gotGame && billlls < 1000000) {
-            System.out.println("Gott get some bills, brah' ");
-        }
-        if (!gotGame && billlls >= 1000000) {
-            this.gotGame = true;
-            System.out.println("NOW YOU GOT SOME GAME BRAH' ");
-        }
-        if (gotGame && demBitches == 0 && billlls < 1000000) {
-            System.out.println("Losing your game brah' ");
-            gotGame = false;
-        }
-    }
-
-    public void gettingRich(int dollaz) {
-        billlls += dollaz;
-    }
-
-    public static void main(String args[]) {
-
-        Playa me = new Playa(0, 600);
-        System.out.println("I got " + me.problems + " but a bitch aint one.");
-        me.usePickUpMove();
-        System.out.println("Dayum... gotta get myself some game");
-        me.getGame();
-        me.usePickUpMove();
-
-    }
-}

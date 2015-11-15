@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * COMP 2526 -- ASSIGNEMNT 2 -- CHESS GAME 
+ * Author: Eva Yu * 
+ * BCIT -- A00942918 -- CST2B  * 
+
  */
 package assignment2.game.chess;
 
