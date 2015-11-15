@@ -13,8 +13,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * this is the main pnael for the chess game. doing thsi will alllow me to
- * expand and add other j panels into the game later if i want
+ * this is the main panel for the chess game. doing this will allow me to expand
+ * and add other j panels into the game later if i want
  * @author Eva
  */
 public class JChessPanel extends JPanel {
@@ -22,10 +22,15 @@ public class JChessPanel extends JPanel {
     private static final int SIZE = 8;
     private static final int SQAURE_DIM = 80;
     static int flag = 0;
-
+    //FOR A MORE EXITING SPACE-IKEA THEME:*/
     final Color SUNSHINE = new Color(252, 198, 10);
     final Color BUBBLEGUM = new Color(35, 210, 254);
     final Color COTTONCANDY = new Color(255, 102, 181);
+
+    //The Current board colors:*//
+    final Color DARK_BROWN = new Color(184, 174, 156);
+    final Color LIGHT_BROWN = new Color(234, 231, 225);
+    final Color SEAFOAM = new Color(172, 207, 204);
 
     private GridLayout boardLayout;
     private JLabel chessLabel;
@@ -56,10 +61,10 @@ public class JChessPanel extends JPanel {
                 jButSquare[i][j].setPreferredSize(new Dimension(SQAURE_DIM, SQAURE_DIM));
                 jButSquare[i][j].addActionListener(new ChessSquareButtonListener(i * SIZE + j + 1));
                 if ((i + j) % 2 == 0) {
-                    jButSquare[i][j].setBackground(Color.DARK_GRAY);
+                    jButSquare[i][j].setBackground(DARK_BROWN);
 
                 } else {
-                    jButSquare[i][j].setBackground(Color.GRAY);
+                    jButSquare[i][j].setBackground(LIGHT_BROWN);
                 }
             }
 
@@ -112,14 +117,14 @@ public class JChessPanel extends JPanel {
                 }
                 jButSquare[flagX - 1][flagY - 1].setText("");
                 if ((flagX - 1 + flagY - 1) % 2 == 0) {
-                    jButSquare[flagX - 1][flagY - 1].setBackground(Color.DARK_GRAY);
+                    jButSquare[flagX - 1][flagY - 1].setBackground(DARK_BROWN);
 
                 } else {
-                    jButSquare[flagX - 1][flagY - 1].setBackground(Color.GRAY);
+                    jButSquare[flagX - 1][flagY - 1].setBackground(LIGHT_BROWN);
                 }
                 flag = 0;
             } else if (flag == 0 && (piece != null)) {
-                jButSquare[x - 1][y - 1].setBackground(COTTONCANDY);
+                jButSquare[x - 1][y - 1].setBackground(SEAFOAM);
                 flag = squarePosition;
             }
 
