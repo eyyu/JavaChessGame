@@ -12,31 +12,32 @@ import assignment2.grid.Square;
 import assignment2.player.Player;
 
 /**
- * This is the chess board class that a chess game will have
- * it carries a matrix of square objects 
- * each sqaure will have either a null object or a board game piece object 
+ * This is the chess board class that a chess game will have it carries a matrix
+ * of square objects each sqaure will have either a null object or a board game
+ * piece object
  *
- * this board also has a grid called from the grid class in 
- * order to more easily facilitate retrieval fo the numeric 
- * position given a row and column value or vice versa  
- * 
+ * this board also has a grid called from the grid class in order to more easily
+ * facilitate retrieval fo the numeric position given a row and column value or
+ * vice versa
+ *
  *
  * @author Eva
  */
 public class ChessBoard {
 
     static final private int BOARDSIZE = 8;
-    private static final int PAWNSROW = 2; 
-                        // pawns occur at the second row from either end of the board
+    private static final int PAWNSROW = 2;
+    // pawns occur at the second row from either end of the board
     private static final int PAWN_INIT_ROW_DIFF = 5; // this is the difference between
-                                                    // the first row of pawns and the 
-                                                    // second row of pawn when the game is initialized
+    // the first row of pawns and the 
+    // second row of pawn when the game is initialized
     Grid board = new Grid(BOARDSIZE); //sets a grid of 8 by 8;
     Square square[][] = new Square[BOARDSIZE][BOARDSIZE];
 
     /*
-     * Note: the validityMatrix is yet to be used ( nor does it properly fuction) in version one. 
-     * 
+     * Note: the validityMatrix is yet to be used ( nor does it properly
+     * fuction) in version one.
+     *
      * the following is an obeject is a private class that hols a matirx for the
      * spaces a piece can move be used by the chess peice to generate the
      * correct places for validity. if the spot chosen is valid, for the piece
@@ -55,9 +56,11 @@ public class ChessBoard {
         this.initBoard();
 
     } // end chessBoard constructor 1 
+
     /**
-     * This method simply intiates an instance of a square for every sqaure on the board
-     * it also sets the numeric cell position of each square starting at 1 to 64 
+     * This method simply intiates an instance of a square for every sqaure on
+     * the board it also sets the numeric cell position of each square starting
+     * at 1 to 64
      */
     private void initSquare() {
         for (int row = 0; row < BOARDSIZE; row++) { // SET THEM PAWNS UP
@@ -67,9 +70,10 @@ public class ChessBoard {
             }
         }
     }
+
     /**
-     * this method initiates the board with the correct pieces and set Colors 
-     * 
+     * this method initiates the board with the correct pieces and set Colors
+     *
      */
     private void initBoard() {
         for (int row = 1; row < BOARDSIZE; row += PAWN_INIT_ROW_DIFF) { // SET THEM PAWNS UP
@@ -134,31 +138,35 @@ public class ChessBoard {
             }
         } // set the first and last rows 
     }
-        /**
-         * NOTE: this is not a working functio for version 1
-         * 
-         * this methods SHOULD be generating a validity matrix that will represent the 
-         * tree of possible steps the piece chosen by the player to be moving 
-         *  
-         * @param p   [this is a BOARDGAMEPIECE object that will be the piece passed in]
-         * @param pos [this is the numeric cell position of eahc piece on the board]
-         */
+
+    /**
+     * NOTE: this is not a working functio for version 1
+     *
+     * this methods SHOULD be generating a validity matrix that will represent
+     * the tree of possible steps the piece chosen by the player to be moving
+     *
+     * @param p [this is a BOARDGAMEPIECE object that will be the piece passed
+     * in]
+     * @param pos [this is the numeric cell position of eahc piece on the board]
+     */
     public void generateValidityMatrix(BoardGamePiece p, int pos) {
         this.validityMatrix = new ValidityMatrix(p, pos);
     }
 
     /**
-     * NOTE: this is not a working function for version 1 
-     * 
-     * this method should pas in the new position of the baord the user decides to move the piece to. 
-     * id the piece cannot move to that location ,the method should reutrn a false 
-     *the method should check the validity matrix to generate the right moves 
-     * 
-     * @param  newPos [this is the int of athe numeric cell postion of 
-     *                the new position that the user wants to move the piece to ]
-     * @param  g      [this is the grid that will faiclitate retrival of the x and y values]
-     * @return        [a boolean value representing whether the user can move 
-     *                the piece to the desired location ]
+     * NOTE: this is not a working function for version 1
+     *
+     * this method should pas in the new position of the baord the user decides
+     * to move the piece to. id the piece cannot move to that location ,the
+     * method should reutrn a false the method should check the validity matrix
+     * to generate the right moves
+     *
+     * @param newPos [this is the int of athe numeric cell postion of  the new
+     * position that the user wants to move the piece to ]
+     * @param g [this is the grid that will faiclitate retrival of the x and y
+     * values]
+     * @return [a boolean value representing whether the user can move  the
+     * piece to the desired location ]
      */
     public boolean checkMove(int newPos, Grid g) {
         //piece handling code
@@ -167,27 +175,28 @@ public class ChessBoard {
         return true;
 
     }
-        /**
-         * NOTE: this method is not a working function for version 1 
-         *  NOTE: I have not yet deicede whether this methods needs to be here 
-         * is only really calls the move method that each and 
-         * every BOARDGAME PIECE CLASSS overrides 
-         *
-         * @param  p      [this is the BOARDGAMEPIECE object being moved]
-         * @param  newPos [the numeric cell position to move to]
-         * @param  curPos [the current position of the piece]
-         * @return        [the numeric cell position to move to if it is valid
-         *                      the current position if not valid]
-         */
+
+    /**
+     * NOTE: this method is not a working function for version 1 NOTE: I have
+     * not yet deicede whether this methods needs to be here is only really
+     * calls the move method that each and every BOARDGAME PIECE CLASSS
+     * overrides
+     *
+     * @param p [this is the BOARDGAMEPIECE object being moved]
+     * @param newPos [the numeric cell position to move to]
+     * @param curPos [the current position of the piece]
+     * @return [the numeric cell position to move to if it is valid the current
+     * position if not valid]
+     */
     public int move(BoardGamePiece p, int newPos, int curPos) {
         return p.move(curPos, newPos, board);
     }
 
     /**
-     *NOTE: none of thsi inner class is functioning for version 1
-     *please stay tuned for version 2!
+     * NOTE: none of thsi inner class is functioning for version 1 please stay
+     * tuned for version 2!
      *
-     * 
+     *
      * this is an inner class that has is holds a 2d array that is like a "sudo
      * board" for the piece requesting the baord it will go to retrieve a 2d
      * array that holds only boolean values that will represent wehther or not a
@@ -202,10 +211,16 @@ public class ChessBoard {
             //get piece position
             for (int row = 0; row < BOARDSIZE; row++) {// first loop for rows
                 for (int col = 0; col < BOARDSIZE; col++) { // second loop for columns 
-                    if (checkValidity(curPos, piece, (row * BOARDSIZE) + col + 1)) //NOTE: need to write a method that will generate 
-                    {
+                    int newPos = (row * BOARDSIZE) + col + 1;
+                    System.out.println("checking position:" + newPos); /*
+                     * tester
+                     */
+
+                    if (checkValidity(curPos, piece, newPos)) {
+                        System.out.println("true on:" + newPos);
                         vM[row][col] = true;
                     } else {
+                        System.out.println("false on:" + newPos);
                         vM[row][col] = false;
                     }
                 }
@@ -213,7 +228,7 @@ public class ChessBoard {
         }
 
         /**
-         * 
+         *
          * This method goes to check the validity a requested space on the baord
          * according the piece being checked. the current numeric cell value the
          * piece has and the numeric cell value that the player would like to
@@ -234,9 +249,10 @@ public class ChessBoard {
             //move to check if it is a valid move right off the back
             int newX = board.getX(newPos);
             int newY = board.getY(newPos);
+
             Square tempNew = square[newX - 1][newY - 1]; // locating the sqaure for the selected location 
             Boolean newPosColor, curPosColor;
-
+            System.out.println("checking with square: " + tempNew.getPosition());
             //the following portion of the code  will check the square to make sure 
             //that the peice on the square is not of the smae setColor 
             //to prevent a usr from kiling their own pieces 
@@ -245,13 +261,14 @@ public class ChessBoard {
                 int curY = board.getY(curPos);
 
                 Square tempCur = square[curX - 1][curY - 1]; // assigns a temp to Square obect
-                newPosColor = (tempNew.getPiece()).getColor();
-                curPosColor = (tempCur.getPiece()).getColor();
-                if ((newPosColor && curPosColor) || (!newPosColor && !curPosColor)) {
-                                 // checking the set color to see if they are form the same set
-                    return false;
-                }
-            } else if (move == curPos) { // a pieces move will return its on position if it 
+                //newPosColor = (tempNew.getPiece()).getColor();
+                //curPosColor = (tempCur.getPiece()).getColor();
+                // if ((newPosColor && curPosColor) || (!newPosColor && !curPosColor)) {
+                //     // checking the set color to see if they are form the same set
+                //     return false;
+                // }
+            }
+            if (move == curPos) { // a pieces move will return its on position if it 
                 //cannot move to that positon  
                 return false;
             }
@@ -275,12 +292,12 @@ public class ChessBoard {
             int x = g.getX(newPos);
             int y = g.getY(newPos);
             return vM[x - 1][y - 1]; // returns the value 
-                                    //found in the validity matrix 
-                                    //for that position desired by the chess piece
+            //found in the validity matrix 
+            //for that position desired by the chess piece
         }
 
         public void print() { // tester to make sure it works.
-                                // it does not work 
+            // it does not work 
             for (int row = 0; row < BOARDSIZE; row++) {
                 for (int col = 0; col < BOARDSIZE; col++) {
                     int temp;
@@ -312,7 +329,7 @@ class Pawn implements BoardGamePiece {
     Boolean setColor; // this sets the color of the piece according to the playe. 
     //black is represented by 0 and white represented by one
     Boolean firstmove = true; // allows the one time movment of two 
-                              //steps in the very first move of the pawn;
+    //steps in the very first move of the pawn;
     public String pieceName = "PAWN";
 
     Player player;// player assigned to the piece
@@ -328,11 +345,10 @@ class Pawn implements BoardGamePiece {
      */
     @Override
     public int move(int currentPos, int dest, Grid g) {
-        
+
         //NOTE TO SELF for V2: 
         //need to get sqaure for makng a kill to see if there is a
         //piece in the square.
-        
         int xCur, xDest, xDiff;
         int yCur, yDest, yDiff;
 
@@ -340,22 +356,32 @@ class Pawn implements BoardGamePiece {
         yCur = g.getY(currentPos);
         xDest = g.getX(dest);
         yDest = g.getY(dest);
+//
+//        System.out.println("xCur:" + xCur);//tester
+//        System.out.println("yCur:" + yCur);//tester
+//        System.out.println("xDest:" + xDest);//tester
+//        System.out.println("yDest:" + yDest);//tester
 
-        if (setColor) {
+        if (setColor == true) { // if set is white
             xDiff = xDest - xCur;
             yDiff = yDest - yCur;
-        } else {
+        } else { // if set is black
             xDiff = xCur - xDest;
             yDiff = yCur - yDest;
         }
 
-        if (yDiff == 2 && this.firstmove) {
+//        System.out.println("xDiff:" + xDiff);//tester
+//        System.out.println("yDiff:" + yDiff);//tester
+        if (this.firstmove == true) {
             this.firstmove = false;
-            return dest;
-        } else if (yDiff == 1 && xDiff == 0) {
-            return dest;
+            if (xDiff == 2) {
+                return dest;
+            }
         }
 
+        if (xDiff == 1 && yDiff == 0) {
+            return dest;
+        }
         //Note to self: 
         //for the kills..
         /*
@@ -363,7 +389,6 @@ class Pawn implements BoardGamePiece {
          * to the upper } if (yDiff == 1 && xDiff == 1){ return dest; //move
          * pawn to the upper }
          */
-
         return currentPos;
     }
 
@@ -376,29 +401,32 @@ class Pawn implements BoardGamePiece {
     }
 
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public boolean getColor() {
         return this.setColor;
     }
+
     /**
-      *please refer to parent class for details of the method
-      * @return [description]
-      */
+     * please refer to parent class for details of the method
+     * @return [description]
+     */
     @Override
     public String getPieceName() {
         return this.pieceName;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public Player getPlayer() {
         return this.player;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setPlayer(Player p) {
@@ -443,36 +471,41 @@ class Rook implements BoardGamePiece {
         }
         return currentPos;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setColor(Boolean setColor) {
         this.setColor = setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public boolean getColor() {
         return this.setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public String getPieceName() {
         return this.pieceName;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public Player getPlayer() {
         return this.player;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setPlayer(Player p) {
@@ -497,60 +530,77 @@ class Knight implements BoardGamePiece {
      * This method moves a knight in chess and retricts it to only the moves a
      * knight can make
      */
+    /**
+     * This method moves a knight in chess and retricts it to only the moves a
+     * knight can make
+     */
     @Override
     public int move(int currentPos, int dest, Grid g) {
         int xCur, xDest, xDiff;
         int yCur, yDest, yDiff;
         int lStep;
+
         xCur = g.getX(currentPos);
         yCur = g.getY(currentPos);
 
         xDest = g.getX(dest);
         yDest = g.getY(dest);
 
-        yDiff = yDest - yCur;
-        xDiff = xDest - xCur;
-
+        yDiff = Math.abs(yDest - yCur);
+        xDiff = Math.abs(xDest - xCur);
+//        System.out.println("xCur:" + xCur);//tester
+//        System.out.println("yCur:" + yCur);//tester
+//        System.out.println("xDest:" + xDest);//tester
+//        System.out.println("yDest:" + yDest);//tester
+//        System.out.println("xDiff:" + xDiff);//tester
+//        System.out.println("yDiff:" + yDiff);//tester
         lStep = Math.abs(yDiff - xDiff);//this is the difference between a y and an x step. 
         //a night should move in one directiosn 3 steps and then turn and move 1
         //the final diffence should be 2 
-
-        if (lStep == 2) {
+//        System.out.println("lStep: " + lStep);//tester
+        if (lStep == 1
+            && (yDiff == 1 || xDiff == 1)
+            && (yDiff == 2 || xDiff == 2)) {
             return dest;
         }
         return currentPos;
 
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setColor(Boolean setColor) {
         this.setColor = setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public boolean getColor() {
         return this.setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public String getPieceName() {
         return this.pieceName;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public Player getPlayer() {
         return this.player;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setPlayer(Player p) {
@@ -594,36 +644,41 @@ class Bishop implements BoardGamePiece {
         return currentPos;
 
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setColor(Boolean setColor) {
         this.setColor = setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public boolean getColor() {
         return this.setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public String getPieceName() {
         return this.pieceName;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public Player getPlayer() {
         return this.player;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setPlayer(Player p) {
@@ -668,36 +723,41 @@ class King implements BoardGamePiece {
         }
         return currentPos;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setColor(Boolean setColor) {
         this.setColor = setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public boolean getColor() {
         return this.setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public String getPieceName() {
         return this.pieceName;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public Player getPlayer() {
         return this.player;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setPlayer(Player p) {
@@ -742,36 +802,41 @@ class Queen implements BoardGamePiece {
         }
         return currentPos;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setColor(Boolean setColor) {
         this.setColor = setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public boolean getColor() {
         return this.setColor;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public String getPieceName() {
         return this.pieceName;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public Player getPlayer() {
         return this.player;
     }
+
     /**
-     *please refer to parent class for details of the method
+     * please refer to parent class for details of the method
      */
     @Override
     public void setPlayer(Player p) {
