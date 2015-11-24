@@ -1,5 +1,7 @@
 package assignment2.player;
 
+import java.io.Serializable;
+
 /**
  * @author Eva
  */
@@ -12,7 +14,7 @@ package assignment2.player;
  * set on or off according to the game and its limitations
  *
  */
-public class Player {
+public class Player implements Serializable {
 
     boolean turn = true;
     boolean pieceMove = true;
@@ -70,71 +72,79 @@ public class Player {
     public void setTurn() {
         this.turn = true;
     }
+
     /**
      * this method is used to restrict the turn of the player
      */
     public void restrictTurn() {
         this.turn = false;
     }
+
     /**
      * NOTE: this method may be necessary for v2, currently not used in v1
-     *  
+     *
      * this method is used to set the piece to be able to move
-     * 
+     *
      */
     public void setPieceMove() {
         this.pieceMove = true;
     }
+
     /**
      * NOTE: this method may be necessary for v2, currently not used in v1
-     * 
+     *
      * this is a method that restricts a piece from moving
      */
     public void restrictPieceMove() {
         this.pieceMove = false;
     }
+
     /**
      * NOTE: this method may be necessary for v2, currently not used in v1
-     * 
+     *
      * @return [description]
      */
     public boolean getPieceMove() {
         return this.pieceMove;
     }
+
     /**
-     * this method is used to set the name of the player.
-     * this method does not need to be used 
+     * this method is used to set the name of the player. this method does not
+     * need to be used
      * @param s [description]
      */
     public void setName(String s) {
         this.name = s;
     }
+
     /**
-     * this method is  used to set the player as the winner
+     * this method is used to set the player as the winner
      */
     public void setWin() {
         this.winner = true;
     }
-        /**
-         * this method retrieves whether the player has won
-         * @return [only returns true if the player is set to winner]
-         */
+
+    /**
+     * this method retrieves whether the player has won
+     * @return [only returns true if the player is set to winner]
+     */
     public boolean isWinner() {
         return this.winner;
     }
+
     /**
-     * NOTE: this method may be necessary for v2, currently not used in v1
-    * is this suposed to be in player class? perhaps a i need a chess player class
-    */
+     * NOTE: this method may be necessary for v2, currently not used in v1 is
+     * this suposed to be in player class? perhaps a i need a chess player class
+     */
     public void setSetColor(boolean setCol) {
         this.setColor = setCol;
     }
+
     /**
-     * NOTE: this method may be necessary for v2, currently not used in v1
-    * is this suposed to be in player class? perhaps a i need a chess player class
-    */
+     * NOTE: this method may be necessary for v2, currently not used in v1 is
+     * this suposed to be in player class? perhaps a i need a chess player class
+     */
     public boolean getSetColor() {
         return this.setColor;
     }
 }
-

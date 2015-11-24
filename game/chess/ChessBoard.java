@@ -10,6 +10,7 @@ import assignment2.game.BoardGamePiece;
 import assignment2.grid.Grid;
 import assignment2.grid.Square;
 import assignment2.player.Player;
+import java.io.Serializable;
 
 /**
  * This is the chess board class that a chess game will have it carries a matrix
@@ -23,7 +24,7 @@ import assignment2.player.Player;
  *
  * @author Eva
  */
-public class ChessBoard {
+public class ChessBoard implements Serializable {
 
     static final private int BOARDSIZE = 8;
     private static final int PAWNSROW = 2;
@@ -203,7 +204,7 @@ public class ChessBoard {
      * peice can be moved to the specific numeric cell location the player
      * requests on the board.
      */
-    class ValidityMatrix { // inner class for the boardgame
+    class ValidityMatrix implements Serializable { // inner class for the boardgame
 
         boolean vM[][] = new boolean[BOARDSIZE][BOARDSIZE];
 
@@ -242,7 +243,7 @@ public class ChessBoard {
          * @return [the function returns true if the location of the requested
          * space is a valid place for the piece to move to]
          */
-        private boolean checkValidity(int curPos, BoardGamePiece piece, int newPos) {
+        public boolean checkValidity(int curPos, BoardGamePiece piece, int newPos) {
             //look for a piece in that square. if the piece is the same color, then you cannot 
             //move to that square... DUHHHHHH
             int move = piece.move(curPos, newPos, board); // asks the specific piece to 
@@ -324,7 +325,7 @@ public class ChessBoard {
  * repersents a pawn
  * @author Eva
  */
-class Pawn implements BoardGamePiece {
+class Pawn implements BoardGamePiece, Serializable {
 
     Boolean setColor; // this sets the color of the piece according to the playe. 
     //black is represented by 0 and white represented by one
@@ -441,7 +442,7 @@ class Pawn implements BoardGamePiece {
  *
  * @author Eva
  */
-class Rook implements BoardGamePiece {
+class Rook implements BoardGamePiece, Serializable {
 
     public String pieceName = "ROOK";
     Boolean setColor; // this sets the color of the piece according to the playe. 
@@ -520,7 +521,7 @@ class Rook implements BoardGamePiece {
  *
  * @author Eva
  */
-class Knight implements BoardGamePiece {
+class Knight implements BoardGamePiece, Serializable {
 
     public String pieceName = "KNIGHT";
     Boolean setColor; // this sets the color of the piece according to the playe. 
@@ -615,7 +616,7 @@ class Knight implements BoardGamePiece {
  *
  * @author Eva
  */
-class Bishop implements BoardGamePiece {
+class Bishop implements BoardGamePiece, Serializable {
 
     Boolean setColor; // this sets the color of the piece according to the playe. 
     public String pieceName = "BISHOP";
@@ -693,7 +694,7 @@ class Bishop implements BoardGamePiece {
  *
  * @author Eva
  */
-class King implements BoardGamePiece {
+class King implements BoardGamePiece, Serializable {
 
     Boolean setColor; // this sets the color of the piece according to the playe. 
     public String pieceName = "KING";
@@ -772,7 +773,7 @@ class King implements BoardGamePiece {
  *
  * @author Eva
  */
-class Queen implements BoardGamePiece {
+class Queen implements BoardGamePiece, Serializable {
 
     public String pieceName = "QUEEN";
     Boolean setColor; // this sets the color of the piece according to the playe. 

@@ -11,6 +11,13 @@ import assignment2.grid.Grid;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * this is the main panel for the chess game. doing this will allow me to expand
@@ -32,11 +39,16 @@ public class JChessPanel extends JPanel {
      * moved a piece, the flag will be reset to 0
      */
     static int flag = 0;
-
     //FOR A MORE EXITING SPACE-IKEA THEME:*/
-    final Color SUNSHINE = new Color(252, 198, 10);
-    final Color BUBBLEGUM = new Color(35, 210, 254);
-    final Color COTTONCANDY = new Color(255, 102, 181);
+    final Color[] SPACEIKEATHEME
+        = {new Color(252, 198, 10), // sunshine
+            new Color(35, 210, 254), //bubblegum
+            new Color(255, 102, 181)}; //cottoncanday
+
+    final Color[] BLAHTHEME
+        = {new Color(184, 174, 156), //darkbrown
+            new Color(234, 231, 225),//lightbrown
+            new Color(172, 207, 204)};//seafoam
 
     //The Current board colors:*//
     final Color DARK_BROWN = new Color(184, 174, 156);
@@ -48,6 +60,7 @@ public class JChessPanel extends JPanel {
     private Chess chess; // chesss game for chesspanel
     private Grid boardGrid = new Grid(SIZE, SIZE); // the grid 
     JButton jButSquare[][] = new JButton[SIZE][SIZE];//a jbuytton for each square
+    private boolean spaceIkeaSet;
 
     /**
      * this is the constructor that will set the pieces on the grid panel
@@ -57,7 +70,11 @@ public class JChessPanel extends JPanel {
         chess = new Chess();//sets new chessgame up
         setPreferredSize(new Dimension(SIZE * SQAURE_DIM, SIZE * SQAURE_DIM));
         // sets the size of the jpanel
+        spaceIkeaSet = false;
+        this.displayChessBoard();
+    }
 
+    private void displayChessBoard() {
         for (int i = 0; i < SIZE; i++) { //  creates the botton for each panel 
             for (int j = 0; j < SIZE; j++) { //  creates the botton for each panel 
                 BoardGamePiece temp = chess.chessBoard.square[i][j].getPiece();
@@ -87,16 +104,74 @@ public class JChessPanel extends JPanel {
         }
     }
 
+    private void resetChessBoard() {
+
+        for (int i = 0; i < SIZE; i++) { //  creates the botton for each panel 
+            for (int j = 0; j < SIZE; j++) { //  creates the botton for each panel 
+                BoardGamePiece temp = chess.chessBoard.square[i][j].getPiece();
+                if (temp != null) { // if there is a piece in the square
+                    String tempName = temp.getPieceName();
+                    jButSquare[i][j].setText(tempName);
+                    if (temp.getColor()) {
+                        jButSquare[i][j].setForeground(Color.BLACK);
+                    } else {
+                        jButSquare[i][j].setForeground(Color.WHITE);
+                    }
+                } else {
+                    jButSquare[i][j].setText("");
+                }
+                // setting board background color
+                if ((i + j) % 2 == 0) {
+                    jButSquare[i][j].setBackground(DARK_BROWN);
+                } else {
+                    jButSquare[i][j].setBackground(LIGHT_BROWN);
+                }
+
+            }
+
+        }
+
+    }
+
+    private void resetSpaceIkea() {
+        for (int i = 0; i < SIZE; i++) { //  creates the botton for each panel 
+            for (int j = 0; j < SIZE; j++) { //  creates the botton for each panel 
+                BoardGamePiece temp = chess.chessBoard.square[i][j].getPiece();
+                if (temp != null) { // if there is a piece in the square
+                    String tempName = temp.getPieceName();
+                    jButSquare[i][j].setText(tempName);
+                    if (temp.getColor()) {
+                        jButSquare[i][j].setForeground(Color.BLACK);
+                    } else {
+                        jButSquare[i][j].setForeground(Color.WHITE);
+                    }
+                } else {
+                    jButSquare[i][j].setText("");
+                }
+                // setting board background color
+                if ((i + j) % 2 == 0) {
+                    jButSquare[i][j].setBackground(SPACEIKEATHEME[0]);
+                } else {
+                    jButSquare[i][j].setBackground(SPACEIKEATHEME[1]);
+                }
+
+            }
+
+        }
+
+    }
+
     private class ChessSquareButtonListener implements ActionListener {
 
         private int squarePosition; // position of the Jbutton
         private int x; // the row of position
         private int y; // the column of position
-
+        private int flagX;
+        private int flagY;
         BoardGamePiece piece; // the board game piece at the cell
 
         /**
-         * constructor of listener will set the positon of the sqaure
+         * constructor of listener will set the position of the square
          * @param pos [description]
          * @return [description]
          */
@@ -104,22 +179,59 @@ public class JChessPanel extends JPanel {
             this.squarePosition = pos;
         }
 
+        private void getPieceCoord() {
+            x = boardGrid.getX(squarePosition); // get row
+            y = boardGrid.getY(squarePosition);//get col
+            piece = chess.chessBoard.square[x - 1][y - 1].getPiece(); // gets the piece
+        }
+
+        private void getFlagCoord() {
+            this.flagX = boardGrid.getX(flag);
+            this.flagY = boardGrid.getY(flag);
+        }
+
+        private void swapPiece() {
+
+        }
+
+        private BoardGamePiece getPieceToMove() {
+            return chess.chessBoard.square[flagX - 1][flagY - 1].getPiece();
+        }
+
+        private void resetSquareColors() {
+            Color color1 = spaceIkeaSet ? SPACEIKEATHEME[0] : BLAHTHEME[0];
+            Color color2 = spaceIkeaSet ? SPACEIKEATHEME[1] : BLAHTHEME[1];
+            if ((flagX - 1 + flagY - 1) % 2 == 0) {
+                jButSquare[flagX - 1][flagY - 1].setBackground(color1);
+            } else {
+                jButSquare[flagX - 1][flagY - 1].setBackground(color2);
+            }
+        }
+
+        private void resetText() {
+            String tempName = piece.getPieceName();
+            jButSquare[x - 1][y - 1].setText(tempName);
+            //setting the color of text
+            if (piece.getColor()) {
+                jButSquare[x - 1][y - 1].setForeground(Color.BLACK);
+            } else {
+                jButSquare[x - 1][y - 1].setForeground(Color.WHITE);
+            }
+            jButSquare[flagX - 1][flagY - 1].setText("");
+        }
+
         /**
          * the action performed method
          * @param e [the clicking of the button activates the action performed ]
          */
         @Override
+
         public void actionPerformed(ActionEvent e) {
             System.out.println("BUTTON PUSHED at button :" + squarePosition);
-
-            x = boardGrid.getX(squarePosition); // get row
-            y = boardGrid.getY(squarePosition);//get col
-
-            piece = chess.chessBoard.square[x - 1][y - 1].getPiece(); // gets the piece
-            System.out.println("piece: " + piece.getPieceName());
+            //System.out.println("piece: " + piece.getPieceName());
             System.out.println("BUTTON PUSHED row:" + x); //*tester  
             System.out.println("BUTTON PUSHED col:" + y); //*tester 
-
+            this.getPieceCoord();
             if (piece != null) {
                 chess.chessBoard.generateValidityMatrix(piece, squarePosition);
                 chess.chessBoard.validityMatrix.print();
@@ -127,44 +239,125 @@ public class JChessPanel extends JPanel {
             }
             if (flag != 0) {//if there is a flag
                 // this looks for the x and y position of the flag
-                int flagX, flagY;
-                flagX = boardGrid.getX(flag);
-                flagY = boardGrid.getY(flag);
-
+                this.getFlagCoord();
                 //this is retrieving the piece that needs to be moved 
-                BoardGamePiece moveP = chess.chessBoard.square[flagX - 1][flagY - 1].getPiece();
+                BoardGamePiece moveP = getPieceToMove();
+                //swaping positions
+                if (chess.chessBoard.validityMatrix.checkValidity(flag, moveP, squarePosition)) {
+                    chess.chessBoard.square[x - 1][y - 1].setPiece(moveP);
+                    chess.chessBoard.square[flagX - 1][flagY - 1].resetSquare();
+                    piece = chess.chessBoard.square[x - 1][y - 1].getPiece();
 
-                //swaping positions    
-                chess.chessBoard.square[x - 1][y - 1].setPiece(moveP);
-                chess.chessBoard.square[flagX - 1][flagY - 1].resetSquare();
-                piece = chess.chessBoard.square[x - 1][y - 1].getPiece();
+                    //setting the text of the buttons
+                    this.resetText();
 
-                //setting the text of the jbutton
-                String tempName = piece.getPieceName();
-                jButSquare[x - 1][y - 1].setText(tempName);
-                //setting the color of text
-                if (piece.getColor()) {
-                    jButSquare[x - 1][y - 1].setForeground(Color.BLACK);
-                } else {
-                    jButSquare[x - 1][y - 1].setForeground(Color.WHITE);
+                    //resetting the color of the board after piece is moved
+                    this.resetSquareColors();
+
+                    flag = 0;
                 }
-                jButSquare[flagX - 1][flagY - 1].setText("");
-
-                //resetting the color of the board after piece is moved
-                if ((flagX - 1 + flagY - 1) % 2 == 0) {
-                    jButSquare[flagX - 1][flagY - 1].setBackground(DARK_BROWN);
-
-                } else {
-                    jButSquare[flagX - 1][flagY - 1].setBackground(LIGHT_BROWN);
-                }
-                flag = 0;
             } else if (flag == 0 && (piece != null)) { // if there is no piece to be moved 
                 //and the square holds a piece
-                jButSquare[x - 1][y - 1].setBackground(SEAFOAM);
+                jButSquare[x - 1][y - 1].
+                    setBackground(spaceIkeaSet ? SPACEIKEATHEME[2] : BLAHTHEME[2]);
                 flag = squarePosition;
             }
 
         }
     }
 
+    class JSave extends JPanel {
+
+        JButton saveButton;
+        JButton loadButton;
+        JButton resetButton;
+
+        public JSave() {
+
+//        setPreferredSize(new Dimension(8 * 80, 40));
+            add(saveButton = new JButton("Save Game"));
+            add(loadButton = new JButton("Load Game"));
+            add(resetButton = new JButton("Reset Game"));
+            saveButton.addActionListener(new serializeButtonListener());
+            loadButton.addActionListener(new serializeButtonListener());
+            resetButton.addActionListener(new serializeButtonListener());
+        }
+
+        private class serializeButtonListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String file = "./testSave.ser";
+                if (e.getSource() == saveButton) {
+                    System.out.println("Save Button Pushed"); // tester
+                    try {
+                        FileOutputStream fos = new FileOutputStream(file);
+                        ObjectOutputStream oos = new ObjectOutputStream(fos);
+                        oos.writeObject(chess);
+                        oos.flush();
+                        oos.close();
+                        fos.close();
+                        System.out.println("Chess Game saved in '" + file + "'");//tester
+                    } catch (IOException ex) {
+                        System.err.println("A problem encountered while"
+                            + " attempting to save game");
+                    }
+                } else if (e.getSource() == loadButton) {
+                    System.out.println("Load Button Pushed");
+                    try {
+                        FileInputStream fis = new FileInputStream(file);
+                        ObjectInputStream ois = new ObjectInputStream(fis);
+                        chess = (Chess) ois.readObject();
+                        ois.close();
+                        fis.close();
+                        resetChessBoard();
+                        System.out.println("Chess Game loaded from '" + file + "'");//tester
+                    } catch (IOException ex) {
+                        System.out.println("Trouble reading saved game");
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(JChessPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (e.getSource() == resetButton) {
+                    System.out.println("Reset Button Pushed");
+                    chess = new Chess();
+                    if (spaceIkeaSet = true) {
+                        resetSpaceIkea();
+                    } else {
+                        resetChessBoard();
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    class ExtraFeatures extends JPanel {
+
+        JButton colorThemeButton;
+        String theme[] = {"Space Ikea Mode", "Normal Mode"};
+
+        public ExtraFeatures() {
+            add(colorThemeButton = new JButton(theme[0]));
+            colorThemeButton.addActionListener(new exFeaturesButtonListener());
+        }
+
+        private class exFeaturesButtonListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (spaceIkeaSet == false) {
+                    colorThemeButton.setText(theme[1]);
+                    spaceIkeaSet = true;
+                    resetSpaceIkea();
+                } else {
+                    colorThemeButton.setText(theme[0]);
+                    spaceIkeaSet = false;
+                    resetChessBoard();
+                }
+            }
+
+        }
+    }
 }

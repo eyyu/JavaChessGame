@@ -10,6 +10,7 @@ import assignment2.game.BoardGamePiece;
 import assignment2.grid.Grid;
 import assignment2.grid.Square;
 import assignment2.player.Player;
+import java.io.Serializable;
 
 /**
  * This class will contain all the compnents of the chess game including the
@@ -23,7 +24,7 @@ import assignment2.player.Player;
  * turns, the number of kills a player has made
  * @author Eva
  */
-public class Chess {
+public class Chess implements Serializable {
 
     static final int PIECES = 32; // 16 pieces 
     static final int PLAYERS = 2; // 2 players at a time

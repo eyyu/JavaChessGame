@@ -6,12 +6,12 @@
 package assignment2.grid;
 
 import assignment2.game.BoardGamePiece;
-
+import java.io.Serializable;
 /**
  * This is the square class. It is here
  * @author Eva
  */
-public class Square {
+public class Square implements Serializable{
 
     BoardGamePiece gamePiece; // holds the object that is a pice for the game
     //NOTE TO SELF: 

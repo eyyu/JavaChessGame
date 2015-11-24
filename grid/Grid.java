@@ -3,7 +3,7 @@
  * November 11th , 2015 
  */
 package assignment2.grid;
-
+import java.io.Serializable;
 /**
  * This is the grid class.
  *
@@ -15,7 +15,7 @@ package assignment2.grid;
  *
  * @author Eva
  */
-public class Grid {
+public class Grid implements Serializable{
 
     private final int row;
     private final int colummn;
