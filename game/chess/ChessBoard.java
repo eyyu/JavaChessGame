@@ -2,7 +2,6 @@
  * COMP 2526 -- ASSIGNEMNT 2 -- CHESS GAME 
  * Author: Eva Yu * 
  * BCIT -- A00942918 -- CST2B  * 
-
  */
 package assignment2.game.chess;
 
@@ -14,11 +13,11 @@ import java.io.Serializable;
 
 /**
  * This is the chess board class that a chess game will have it carries a matrix
- * of square objects each sqaure will have either a null object or a board game
+ * of square objects each square will have either a null object or a board game
  * piece object
  *
  * this board also has a grid called from the grid class in order to more easily
- * facilitate retrieval fo the numeric position given a row and column value or
+ * facilitate retrieval of the numeric position given a row and column value or
  * vice versa
  *
  *
@@ -27,7 +26,6 @@ import java.io.Serializable;
 public class ChessBoard implements Serializable {
 
     static final private int BOARDSIZE = 8;
-    private static final int PAWNSROW = 2;
     // pawns occur at the second row from either end of the board
     private static final int PAWN_INIT_ROW_DIFF = 5; // this is the difference between
     // the first row of pawns and the 
@@ -47,7 +45,7 @@ public class ChessBoard implements Serializable {
     ValidityMatrix validityMatrix;
 
     /**
-     * This is onw long class initaition. it sets all the pieces of the board
+     * This is one long class initiation. it sets all the pieces of the board
      * and sets theColor of each piece the there are no players on the board.
      * the board is simply instantiated for the chess game class
      *
@@ -77,6 +75,7 @@ public class ChessBoard implements Serializable {
      *
      */
     private void initBoard() {
+        // set the first and last rows 
         for (int row = 1; row < BOARDSIZE; row += PAWN_INIT_ROW_DIFF) { // SET THEM PAWNS UP
             for (int col = 0; col < BOARDSIZE; col++) {
 
@@ -84,11 +83,11 @@ public class ChessBoard implements Serializable {
                 // are these too many nested functions??!?  
                 //but ... it makes life so much easier!! NO ,it is NOT ( says I )
                 if (row < (BOARDSIZE / 2)) {
-                    (this.square[row][col].getPiece()).setColor(true); // White set
+                    (this.square[row][col].getPiece()).setColor(true); // black set
                 }
 
                 if (row > (BOARDSIZE / 2)) {
-                    (this.square[row][col].getPiece()).setColor(false); // Black set
+                    (this.square[row][col].getPiece()).setColor(false); // white set
                 }
             }
         }
@@ -130,14 +129,14 @@ public class ChessBoard implements Serializable {
                 }
 
                 if (row < (BOARDSIZE / 2)) {
-                    (this.square[row][col].getPiece()).setColor(true); // White set
+                    (this.square[row][col].getPiece()).setColor(true); //Black set
                 }
 
                 if (row > (BOARDSIZE / 2)) {
-                    (this.square[row][col].getPiece()).setColor(false); // Black set
+                    (this.square[row][col].getPiece()).setColor(false); // White set
                 }
             }
-        } // set the first and last rows 
+        }
     }
 
     /**
@@ -190,7 +189,7 @@ public class ChessBoard implements Serializable {
      * position if not valid]
      */
     public int move(BoardGamePiece p, int newPos, int curPos) {
-        return p.move(curPos, newPos, board);
+        return p.move(curPos, newPos, board, square);
     }
 
     /**
@@ -206,28 +205,28 @@ public class ChessBoard implements Serializable {
      */
     class ValidityMatrix implements Serializable { // inner class for the boardgame
 
+        private static final int DIRECTIONAL_FLAGS = 4;
         boolean vM[][] = new boolean[BOARDSIZE][BOARDSIZE];
 
         private ValidityMatrix(BoardGamePiece piece, int curPos) {
+            //this.initFlags();
             //get piece position
             for (int row = 0; row < BOARDSIZE; row++) {// first loop for rows
                 for (int col = 0; col < BOARDSIZE; col++) { // second loop for columns 
                     int newPos = (row * BOARDSIZE) + col + 1;
-                    System.out.println("checking position:" + newPos); /*
-                     * tester
-                     */
+                    vM[row][col] = checkValidity(curPos, piece, newPos);
 
-                    if (checkValidity(curPos, piece, newPos)) {
-                        System.out.println("true on:" + newPos);
-                        vM[row][col] = true;
-                    } else {
-                        System.out.println("false on:" + newPos);
-                        vM[row][col] = false;
-                    }
                 }
             }
+
         }
 
+        /**
+         * checks for the blocked moves
+         * @param piece [description]
+         * @param curPos [description]
+         * @return [description]
+         */
         /**
          *
          * This method goes to check the validity a requested space on the baord
@@ -244,35 +243,11 @@ public class ChessBoard implements Serializable {
          * space is a valid place for the piece to move to]
          */
         public boolean checkValidity(int curPos, BoardGamePiece piece, int newPos) {
-            //look for a piece in that square. if the piece is the same color, then you cannot 
-            //move to that square... DUHHHHHH
-            int move = piece.move(curPos, newPos, board); // asks the specific piece to 
-            //move to check if it is a valid move right off the back
-            int newX = board.getX(newPos);
-            int newY = board.getY(newPos);
-
-            Square tempNew = square[newX - 1][newY - 1]; // locating the sqaure for the selected location 
-            Boolean newPosColor, curPosColor;
-            System.out.println("checking with square: " + tempNew.getPosition());
-            //the following portion of the code  will check the square to make sure 
-            //that the peice on the square is not of the smae setColor 
-            //to prevent a usr from kiling their own pieces 
-            if (tempNew != null) {
-                int curX = board.getX(curPos);
-                int curY = board.getY(curPos);
-
-                Square tempCur = square[curX - 1][curY - 1]; // assigns a temp to Square obect
-                //newPosColor = (tempNew.getPiece()).getColor();
-                //curPosColor = (tempCur.getPiece()).getColor();
-                // if ((newPosColor && curPosColor) || (!newPosColor && !curPosColor)) {
-                //     // checking the set color to see if they are form the same set
-                //     return false;
-                // }
-            }
-            if (move == curPos) { // a pieces move will return its on position if it 
-                //cannot move to that positon  
+            //frist off: check if the pieces allows for such an angle of move.
+            int move = piece.move(curPos, newPos, board, square); // asks the specific piece to move 
+            if (move == curPos) {
                 return false;
-            }
+            }// a pieces move will return its own position if it cannot move to that positon  
             return true;
         }
 
@@ -345,7 +320,7 @@ class Pawn implements BoardGamePiece, Serializable {
      * @return [the int of the position of the square it needs to move to]
      */
     @Override
-    public int move(int currentPos, int dest, Grid g) {
+    public int move(int currentPos, int dest, Grid g, Square[][] square) {
 
         //NOTE TO SELF for V2: 
         //need to get sqaure for makng a kill to see if there is a
@@ -393,6 +368,10 @@ class Pawn implements BoardGamePiece, Serializable {
         return currentPos;
     }
 
+    // @Override
+    // public int checkBlocks(int currentPos, int dest, Square[][] square) {
+    //     return currentPos;
+    // }
     /**
      * please refer to parent class for details of the method
      */
@@ -432,6 +411,7 @@ class Pawn implements BoardGamePiece, Serializable {
     @Override
     public void setPlayer(Player p) {
     }
+
 }
 
 /**
@@ -453,7 +433,7 @@ class Rook implements BoardGamePiece, Serializable {
      * bishop can make
      */
     @Override
-    public int move(int currentPos, int dest, Grid g) {
+    public int move(int currentPos, int dest, Grid g, Square[][] square) {
         int xCur, xDest, xDiff;
         int yCur, yDest, yDiff;
 
@@ -473,6 +453,10 @@ class Rook implements BoardGamePiece, Serializable {
         return currentPos;
     }
 
+    // @Override
+    // public int checkBlocks(int currentPos, int dest, Square[][] square) {
+    //     return currentPos;
+    // }
     /**
      * please refer to parent class for details of the method
      */
@@ -536,7 +520,7 @@ class Knight implements BoardGamePiece, Serializable {
      * knight can make
      */
     @Override
-    public int move(int currentPos, int dest, Grid g) {
+    public int move(int currentPos, int dest, Grid g, Square[][] square) {
         int xCur, xDest, xDiff;
         int yCur, yDest, yDiff;
         int lStep;
@@ -568,6 +552,10 @@ class Knight implements BoardGamePiece, Serializable {
 
     }
 
+    // @Override
+    // public int checkBlocks(int currentPos, int dest, Square[][] square) {
+    //     return currentPos;
+    // }
     /**
      * please refer to parent class for details of the method
      */
@@ -627,7 +615,9 @@ class Bishop implements BoardGamePiece, Serializable {
      * bishop can make
      */
     @Override
-    public int move(int currentPos, int dest, Grid g) {
+
+    public int move(int currentPos, int dest, Grid g, Square[][] square) {
+
         int xCur, xDest, xDiff;
         int yCur, yDest, yDiff;
 
@@ -636,16 +626,19 @@ class Bishop implements BoardGamePiece, Serializable {
         xDest = g.getX(dest);
         yDest = g.getY(dest);
 
-        yDiff = yDest - yCur;
-        xDiff = xDest - xCur;
+        yDiff = Math.abs(yDest - yCur);
+        xDiff = Math.abs(xDest - xCur);
 
         if (xDiff == yDiff) {
             return dest;
         }
         return currentPos;
-
     }
 
+    // @Override
+    // public int checkBlocks(int currentPos, int dest, Square[][] square) {
+    //     return currentPos;
+    // }
     /**
      * please refer to parent class for details of the method
      */
@@ -705,7 +698,7 @@ class King implements BoardGamePiece, Serializable {
      * king can make
      */
     @Override
-    public int move(int currentPos, int dest, Grid g) {
+    public int move(int currentPos, int dest, Grid g, Square[][] square) {
         int xCur, xDest, xDiff;
         int yCur, yDest, yDiff;
 
@@ -714,8 +707,8 @@ class King implements BoardGamePiece, Serializable {
         xDest = g.getX(dest);
         yDest = g.getY(dest);
 
-        yDiff = yDest - yCur;
-        xDiff = xDest - xCur;
+        yDiff = Math.abs(yDest - yCur);
+        xDiff = Math.abs(xDest - xCur);
 
         if ((yDiff == 1 && xDiff == 0)
             || (yDiff == 0 && xDiff == 1)
@@ -725,6 +718,10 @@ class King implements BoardGamePiece, Serializable {
         return currentPos;
     }
 
+    // @Override
+    // public int checkBlocks(int currentPos, int dest, Square[][] square) {
+    //     return currentPos;
+    // }
     /**
      * please refer to parent class for details of the method
      */
@@ -784,9 +781,9 @@ class Queen implements BoardGamePiece, Serializable {
      * queen can make
      */
     @Override
-    public int move(int currentPos, int dest, Grid g) {
-        int xCur, xDest, xDiff;
-        int yCur, yDest, yDiff;
+    public int move(int currentPos, int dest, Grid g, Square[][] square) {
+        int xCur, xDest, xDiff, xTemp;
+        int yCur, yDest, yDiff, yTemp;
 
         xCur = g.getX(currentPos);
         yCur = g.getY(currentPos);
@@ -796,14 +793,92 @@ class Queen implements BoardGamePiece, Serializable {
         yDiff = Math.abs(yDest - yCur);
         xDiff = Math.abs(xDest - xCur);
 
-        if ((yDiff == xDiff) || // going at an angle
-            (yDiff == 0) || // moving on the x axis
-            (xDiff == 0)) { // moving on the y axis 
+        xTemp = xCur;
+        yTemp = yCur;
+
+//        System.out.println("xCur:" + xCur);//tester
+//        System.out.println("yCur:" + yCur);//tester
+//        System.out.println("xDest:" + xDest);//tester
+//        System.out.println("yDest:" + yDest);//tester
+//        System.out.println("xDiff:" + xDiff);//tester
+//        System.out.println("xDiff:" + xDiff);//tester
+//        System.out.println("xTemp:" + xTemp);//tester
+//        System.out.println("yTemp:" + yTemp);//tester
+        if (yDiff == xDiff) { // going at an angle
+            while (xTemp != xDest) {
+                if (xTemp < xDest && yTemp < yDest) {
+                    xTemp++;
+                    yTemp++;
+                } else if (xTemp > xDest && yTemp > yDest) {
+                    xTemp--;
+                    yTemp--;
+                } else if (xTemp < xDest && yTemp > yDest) {
+                    xTemp++;
+                    yTemp--;
+                } else {
+                    xTemp--;
+                    yTemp++;
+                }
+//                System.out.println("Checking Position 1: " + g.getPos(xTemp, yTemp)); //tester
+//                System.out.println("1: " + square[xTemp - 1][yTemp - 1].getPiece());///tester
+                if (square[xTemp - 1][yTemp - 1].getPiece() != null) {
+//                    System.out.println("Set temp Color: " + square[xTemp - 1][yTemp - 1].getPiece().getColor()); // tester
+//                    System.out.println("Temp pos: " + g.getPos(xTemp, yTemp)); // tester
+//                    System.out.println("Dest pos: " + dest); // tester
+                    if ((g.getPos(xTemp, yTemp) == dest)
+                        && (square[xTemp - 1][yTemp - 1].getPiece().getColor() != this.setColor)) {
+                        return dest;
+                    }
+                    return currentPos;
+                }
+            }//end while
+            return dest;
+        } else if (yDiff
+            == 0) {// moving on the x axis
+            while (xTemp != xDest) {
+                if (xTemp < xDest) {
+                    xTemp++;
+                } else {
+                    xTemp--;
+                }
+//                System.out.println("Checking Position 2: " + g.getPos(xTemp, yTemp)); //tester
+//                System.out.println("2: " + square[xTemp - 1][yTemp - 1].getPiece());///tester
+                if (square[xTemp - 1][yTemp - 1].getPiece() != null) {
+                    if ((g.getPos(xTemp, yTemp) == dest)
+                        && (square[xTemp - 1][yTemp - 1].getPiece().getColor() != this.setColor)) {
+                        return dest;
+                    }
+                    return currentPos;
+                }
+            }//end while
+            return dest;
+        } else if (xDiff
+            == 0) {//mving on the y axis
+            while (yTemp != yDest) {
+                if (yTemp < yDest) {
+                    yTemp++;
+                } else {
+                    yTemp--;
+                }
+//                System.out.println("Checking Position 3: " + g.getPos(xTemp, yTemp)); //tester
+//                System.out.println("3: " + square[xTemp - 1][yTemp - 1].getPiece());///tester
+                if (square[xTemp - 1][yTemp - 1].getPiece() != null) {
+                    if ((g.getPos(xTemp, yTemp) == dest)
+                        && (square[xTemp - 1][yTemp - 1].getPiece().getColor() != this.setColor)) {
+                        return dest;
+                    }
+                    return currentPos;
+                }
+            }//end while
             return dest;
         }
         return currentPos;
     }
 
+    // @Override
+// public int checkBlocks(int currentPos, int dest, Square[][] square) {
+//     return currentPos;
+// }
     /**
      * please refer to parent class for details of the method
      */

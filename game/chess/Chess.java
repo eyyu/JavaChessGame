@@ -32,14 +32,12 @@ public class Chess implements Serializable {
 
     ChessBoard chessBoard;// this is the board that will contain 
     //all the sqaure, each with a piece or set to null
-    Player p1; // should be starting player
-    Player p2; // should get second turn 
+    private Player p1; // should be starting player
+    private Player p2; // should get second turn 
     private int p1count; // number of pieces that the player has
     private int p2count; // number of peices that the player has 
     private BoardGamePiece p1pieces[] = new BoardGamePiece[PIECES / 2];
     private BoardGamePiece p2pieces[] = new BoardGamePiece[PIECES / 2];
-    Boolean p1setColor; // true== white
-    Boolean p2setColor; // false == black;
 
     /*
      * Grid baord game constructor will create a new grid for the board @param
@@ -51,13 +49,13 @@ public class Chess implements Serializable {
 
     /**
      * This method intializes the players for the chess class it will restrict
-     * player 2's turn in order for whoever playre one is to start first
+     * player 2's turn in order for whoever player one is to start first
      *
      */
     private void initPlayers() {
         this.p1 = new Player();
         this.p2 = new Player();
-        this.p2.setSetColor(false); // auto set player 2 to black set setColor
+        this.p1.setSetColor(false); // auto set player 2 to black set setColor
         this.p2.restrictTurn();
     }
 
@@ -78,8 +76,11 @@ public class Chess implements Serializable {
         //status of the player
         if (player == 1) {
             return p1;
+        } else if (player == 2) {
+            return p2;
+        } else {
+            return null;
         }
-        return p2;
     }
 
     /**

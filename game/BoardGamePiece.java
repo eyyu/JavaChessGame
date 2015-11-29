@@ -7,6 +7,7 @@
 package assignment2.game;
 
 import assignment2.grid.Grid;
+import assignment2.grid.Square;
 import assignment2.player.Player;
 
 /**
@@ -17,8 +18,9 @@ import assignment2.player.Player;
  */
 public interface BoardGamePiece {
 
-    int move(int currentPos, int dest, Grid g);
+    int move(int currentPos, int dest, Grid g, Square[][] square);
 
+    //int move(int currentPos, int dest, Grid g);
     void setColor(Boolean setColor);
 
     boolean getColor();

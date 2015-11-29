@@ -84,7 +84,7 @@ public class Grid implements Serializable{
      * @return [description]
      */
     public int getX(int pos) {
-        if (pos % colummn == 0) {
+        if (pos % this.colummn == 0) {
             return (pos / this.colummn);
         } else {
             return (pos / this.colummn) + 1;

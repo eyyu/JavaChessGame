@@ -15,8 +15,6 @@ public class Square implements Serializable{
 
     BoardGamePiece gamePiece; // holds the object that is a pice for the game
     //NOTE TO SELF: 
-    //... i dont like this, its doesnt seem super object oriented because this square class should really be called boardgamesqaure 
-    //-.-" ewwwww Eva, ewww 
 
     protected int position;  // the numeric cell positon of sqaure on grid
     /**
