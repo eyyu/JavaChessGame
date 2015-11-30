@@ -10,6 +10,7 @@ import assignment2.game.BoardGamePiece;
 import assignment2.grid.Grid;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,6 +19,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 /**
  * this is the main panel for the chess game. doing this will allow me to expand
@@ -43,21 +45,18 @@ public class JChessPanel extends JPanel {
     final Color[] SPACEIKEATHEME
         = {new Color(252, 198, 10), // sunshine
             new Color(35, 210, 254), //bubblegum
-            new Color(255, 102, 181)}; //cottoncanday
+            new Color(135, 217, 45)}; //SLIMEGREEN
 
     final Color[] BLAHTHEME
-        = {new Color(100, 100, 100), //darkgray
-            new Color(150, 150, 150),//lightgray
+        = {Color.BLACK,
+            Color.WHITE,
             new Color(172, 207, 204)};//seafoam
 
-//    //The Current board colors:*//
-//    final Color DARK_BROWN = new Color(184, 174, 156);
-//    final Color LIGHT_BROWN = new Color(234, 231, 225);
-//    final Color SEAFOAM = new Color(172, 207, 204);
-    private GridLayout boardLayout; // the grid of the Jpanel
-    private JLabel chessLabel; // for version 2
+    final Color[] SETCOLOR
+        = {new Color(0, 120, 120), //darkset
+            new Color(100, 255, 255)};//lightset 
     private Chess chess; // chesss game for chesspanel
-    private Grid boardGrid = new Grid(SIZE, SIZE); // the grid 
+    private final Grid boardGrid = new Grid(SIZE, SIZE); // the grid 
     JButton jButSquare[][] = new JButton[SIZE][SIZE];//a jbuytton for each square
     private boolean spaceIkeaSet;
     private int player = 1;
@@ -82,9 +81,9 @@ public class JChessPanel extends JPanel {
                     String tempName = temp.getPieceName();
                     add(jButSquare[i][j] = new JButton(tempName));
                     if (temp.getColor()) {
-                        jButSquare[i][j].setForeground(Color.BLACK); // top - black set
+                        jButSquare[i][j].setForeground(SETCOLOR[0]); // top - black set
                     } else {
-                        jButSquare[i][j].setForeground(Color.WHITE); // bottom - white set
+                        jButSquare[i][j].setForeground(SETCOLOR[1]); // bottom - white set
                     }
                 } else {
                     add(jButSquare[i][j] = new JButton(""));
@@ -115,9 +114,9 @@ public class JChessPanel extends JPanel {
                     String tempName = temp.getPieceName();
                     jButSquare[i][j].setText(tempName);
                     if (temp.getColor()) {
-                        jButSquare[i][j].setForeground(Color.BLACK);
+                        jButSquare[i][j].setForeground(SETCOLOR[0]);
                     } else {
-                        jButSquare[i][j].setForeground(Color.WHITE);
+                        jButSquare[i][j].setForeground(SETCOLOR[1]);
                     }
                 } else {
                     jButSquare[i][j].setText("");
@@ -183,9 +182,9 @@ public class JChessPanel extends JPanel {
             jButSquare[x - 1][y - 1].setText(tempName);
             //setting the color of text
             if (piece.getColor()) {
-                jButSquare[x - 1][y - 1].setForeground(Color.BLACK);
+                jButSquare[x - 1][y - 1].setForeground(SETCOLOR[0]);
             } else {
-                jButSquare[x - 1][y - 1].setForeground(Color.WHITE);
+                jButSquare[x - 1][y - 1].setForeground(SETCOLOR[1]);
             }
             jButSquare[flagX - 1][flagY - 1].setText("");
         }
@@ -217,14 +216,6 @@ public class JChessPanel extends JPanel {
 
                 //this is retrieving the piece that needs to be moved 
                 BoardGamePiece moveP = getPieceToMove();
-                if (moveP.getColor()) {
-                    System.out.println("player 1 set color: "
-                        + (chess.getPlayer(1).getSetColor() ? " true " : "false"));// tester
-                } else if (!moveP.getColor()) {
-                    System.out.println("player 2 set color: "
-                        + (chess.getPlayer(2).getSetColor() ? " true " : "false"));// tester
-                }
-
                 //swaping positions
                 if (chess.chessBoard.validityMatrix.checkValidity(flag, moveP, squarePosition)) {
                     chess.chessBoard.square[x - 1][y - 1].setPiece(moveP);
@@ -257,6 +248,8 @@ public class JChessPanel extends JPanel {
         JButton saveButton;
         JButton loadButton;
         JButton resetButton;
+        JFileChooser fileChooser;
+        File selectedFile;
 
         public JSave() {
 
@@ -274,37 +267,50 @@ public class JChessPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String file = "./testSave.ser";
                 if (e.getSource() == saveButton) {
                     // System.out.println("Save Button Pushed"); // tester
                     try {
-                        FileOutputStream fos = new FileOutputStream(file);
+                        fileChooser = new JFileChooser();
+                        fileChooser.setDialogTitle("Please choose location to save");
+                        int userSelection = fileChooser.showSaveDialog(null);
+                        if (userSelection == JFileChooser.APPROVE_OPTION) {
+                            selectedFile = fileChooser.getSelectedFile();
+                        }
+                        FileOutputStream fos = new FileOutputStream(selectedFile.getName());
                         ObjectOutputStream oos = new ObjectOutputStream(fos);
                         oos.writeObject(chess);
                         oos.flush();
                         oos.close();
                         fos.close();
-                        System.out.println("Chess Game saved in '" + file + "'");//tester
+                        System.out.println("Chess Game saved in '" + selectedFile.getName() + "'");//tester
                     } catch (IOException ex) {
                         System.err.println("A problem encountered while"
                             + " attempting to save game");
                     }
                 } else if (e.getSource() == loadButton) {
-                    //System.out.println("Load Button Pushed");
                     try {
-                        FileInputStream fis = new FileInputStream(file);
+                        fileChooser = new JFileChooser();
+                        fileChooser.setDialogTitle("Please choose file to load");
+                        int returnValue = fileChooser.showOpenDialog(null);
+                        //System.out.println("Load Button Pushed");
+                        if (returnValue == JFileChooser.APPROVE_OPTION) {
+                            selectedFile = fileChooser.getSelectedFile();
+                            System.out.println("Selected File:" + selectedFile.getName());
+                        }
+                        FileInputStream fis = new FileInputStream(selectedFile.getName());
                         ObjectInputStream ois = new ObjectInputStream(fis);
                         chess = (Chess) ois.readObject();
                         ois.close();
                         fis.close();
                         resetChessBoard();
-                        System.out.println("Chess Game loaded from '" + file + "'");//tester
+                        System.out.println("Chess Game loaded from '" + selectedFile + "'");//tester
                     } catch (IOException ex) {
                         System.out.println("Trouble reading saved game");
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(JChessPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } else if (e.getSource() == resetButton) {
+                } else if (e.getSource()
+                    == resetButton) {
                     //System.out.println("Reset Button Pushed");
                     chess = new Chess();
                     resetChessBoard();
