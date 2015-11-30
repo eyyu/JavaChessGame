@@ -46,8 +46,8 @@ public class JChessPanel extends JPanel {
             new Color(255, 102, 181)}; //cottoncanday
 
     final Color[] BLAHTHEME
-        = {new Color(184, 174, 156), //darkbrown
-            new Color(234, 231, 225),//lightbrown
+        = {new Color(100, 100, 100), //darkgray
+            new Color(150, 150, 150),//lightgray
             new Color(172, 207, 204)};//seafoam
 
 //    //The Current board colors:*//
@@ -60,6 +60,7 @@ public class JChessPanel extends JPanel {
     private Grid boardGrid = new Grid(SIZE, SIZE); // the grid 
     JButton jButSquare[][] = new JButton[SIZE][SIZE];//a jbuytton for each square
     private boolean spaceIkeaSet;
+    private int player = 1;
 
     /**
      * this is the constructor that will set the pieces on the grid panel
@@ -139,6 +140,8 @@ public class JChessPanel extends JPanel {
         private int y; // the column of position
         private int flagX;
         private int flagY;
+        private boolean pTurn;
+
         BoardGamePiece piece; // the board game piece at the cell
 
         /**
@@ -159,10 +162,6 @@ public class JChessPanel extends JPanel {
         private void getFlagCoord() {
             this.flagX = boardGrid.getX(flag);
             this.flagY = boardGrid.getY(flag);
-        }
-
-        private void swapPiece() {
-
         }
 
         private BoardGamePiece getPieceToMove() {
@@ -198,11 +197,7 @@ public class JChessPanel extends JPanel {
         @Override
 
         public void actionPerformed(ActionEvent e) {
-            System.out.println("BUTTON PUSHED at button :" + squarePosition);
-            //System.out.println("piece: " + piece.getPieceName());
-            System.out.println("BUTTON PUSHED row:" + x); //*tester  
-            System.out.println("BUTTON PUSHED col:" + y); //*tester 
-            ;
+            System.out.println("BUTTON PUSHED at button :" + squarePosition);//testyer
 
             this.getPieceCoord();
             if (piece != null) {
@@ -213,6 +208,13 @@ public class JChessPanel extends JPanel {
             if (flag != 0) {//if there is a flag
                 // this looks for the x and y position of the flag
                 this.getFlagCoord();
+
+                if (this.squarePosition == flag) { // allows you to deselect
+                    flag = 0;
+                    this.resetSquareColors();
+                    return;
+                }
+
                 //this is retrieving the piece that needs to be moved 
                 BoardGamePiece moveP = getPieceToMove();
                 if (moveP.getColor()) {
@@ -228,20 +230,20 @@ public class JChessPanel extends JPanel {
                     chess.chessBoard.square[x - 1][y - 1].setPiece(moveP);
                     chess.chessBoard.square[flagX - 1][flagY - 1].resetSquare();
                     piece = chess.chessBoard.square[x - 1][y - 1].getPiece();
-
                     //setting the text of the buttons
                     this.resetText();
-
                     //resetting the color of the board after piece is moved
                     this.resetSquareColors();
-
+                    player = (player == 1) ? 2 : 1;
                     flag = 0;
                 }
             } else if (flag == 0 && (piece != null)) { // if there is no piece to be moved 
                 //and the square holds a piece
-                jButSquare[x - 1][y - 1].
-                    setBackground(spaceIkeaSet ? SPACEIKEATHEME[2] : BLAHTHEME[2]);
-                flag = squarePosition;
+                if (chess.getPlayer(player).getSetColor() == piece.getColor()) {
+                    jButSquare[x - 1][y - 1].
+                        setBackground(spaceIkeaSet ? SPACEIKEATHEME[2] : BLAHTHEME[2]);
+                    flag = squarePosition;
+                }
             }
 
         }
@@ -249,12 +251,16 @@ public class JChessPanel extends JPanel {
 
     class JSave extends JPanel {
 
+        private static final int ROW = 3;
+        private static final int COL = 1;
+
         JButton saveButton;
         JButton loadButton;
         JButton resetButton;
 
         public JSave() {
 
+            super(new GridLayout(ROW, COL));
 //        setPreferredSize(new Dimension(8 * 80, 40));
             add(saveButton = new JButton("Save Game"));
             add(loadButton = new JButton("Load Game"));
@@ -270,7 +276,7 @@ public class JChessPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String file = "./testSave.ser";
                 if (e.getSource() == saveButton) {
-                    System.out.println("Save Button Pushed"); // tester
+                    // System.out.println("Save Button Pushed"); // tester
                     try {
                         FileOutputStream fos = new FileOutputStream(file);
                         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -284,7 +290,7 @@ public class JChessPanel extends JPanel {
                             + " attempting to save game");
                     }
                 } else if (e.getSource() == loadButton) {
-                    System.out.println("Load Button Pushed");
+                    //System.out.println("Load Button Pushed");
                     try {
                         FileInputStream fis = new FileInputStream(file);
                         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -299,16 +305,12 @@ public class JChessPanel extends JPanel {
                         Logger.getLogger(JChessPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else if (e.getSource() == resetButton) {
-                    System.out.println("Reset Button Pushed");
+                    //System.out.println("Reset Button Pushed");
                     chess = new Chess();
                     resetChessBoard();
-
                 }
-
             }
-
         }
-
     }
 
     class ExtraFeatures extends JPanel {

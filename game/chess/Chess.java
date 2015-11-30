@@ -7,13 +7,11 @@
 package assignment2.game.chess;
 
 import assignment2.game.BoardGamePiece;
-import assignment2.grid.Grid;
-import assignment2.grid.Square;
 import assignment2.player.Player;
 import java.io.Serializable;
 
 /**
- * This class will contain all the compnents of the chess game including the
+ * This class will contain all the components of the chess game including the
  * players the pieces and the board
  *
  * NOTE NOV. 15. 2015:
@@ -55,7 +53,7 @@ public class Chess implements Serializable {
     private void initPlayers() {
         this.p1 = new Player();
         this.p2 = new Player();
-        this.p1.setSetColor(false); // auto set player 2 to black set setColor
+        this.p1.setSetColor(false); // auto set player 2 to white set setColor
         this.p2.restrictTurn();
     }
 

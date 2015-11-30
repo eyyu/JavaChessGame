@@ -20,7 +20,6 @@ public interface BoardGamePiece {
 
     int move(int currentPos, int dest, Grid g, Square[][] square);
 
-    //int move(int currentPos, int dest, Grid g);
     void setColor(Boolean setColor);
 
     boolean getColor();

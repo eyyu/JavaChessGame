@@ -21,13 +21,21 @@ public class ChessFrame extends JFrame {
 
     public static void main(String args[]) {
         JFrame chessFrame;
-        JPanel chessGamePanel = new JPanel();
         JChessPanel chessPanel = new JChessPanel();
-        chessGamePanel.add(chessPanel);
-        chessGamePanel.add(chessPanel.new JSave());
-        chessGamePanel.add(chessPanel.new ExtraFeatures());
+        JPanel chessGamePanel = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        chessGamePanel.add(chessPanel.new JSave(), c);
+        c.gridx = 1;
+        c.gridy = 0;
+        chessGamePanel.add(chessPanel, c);
+        c.gridx = 1;
+        c.gridy = 1;
+        chessGamePanel.add(chessPanel.new ExtraFeatures(), c);
         JFrame.setDefaultLookAndFeelDecorated(true);
-        chessFrame = new JFrame("Chess Game Version 1.5");
+        chessFrame = new JFrame("Chess Game Version 2.0");
         chessFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chessFrame.getContentPane().add(chessGamePanel);
         chessFrame.pack();
